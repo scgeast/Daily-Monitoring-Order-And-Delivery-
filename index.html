@@ -16,27 +16,24 @@
             --danger: #e74c3c;
             --light: #ecf0f1;
             --dark: #34495e;
-            --header-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --header-gradient: linear-gradient(135deg, #8B0000 0%, #800080 100%);
             --kpi-gradient: linear-gradient(135deg, #1a237e 0%, #283593 100%);
             --chart-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --chart-gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --chart-gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
         body {
             background-color: #f5f7fa;
             color: #333;
             display: flex;
             min-height: 100vh;
         }
-        
         /* Sidebar Styles */
         .sidebar {
             width: 320px;
@@ -47,7 +44,6 @@
             flex-direction: column;
             z-index: 1000;
         }
-        
         .sidebar-header {
             padding: 20px;
             background: var(--header-gradient);
@@ -56,7 +52,6 @@
             justify-content: space-between;
             align-items: center;
         }
-        
         .sidebar-toggle {
             background: none;
             border: none;
@@ -65,17 +60,14 @@
             cursor: pointer;
             padding: 5px;
         }
-        
         .sidebar-content {
             padding: 20px;
             flex: 1;
             overflow-y: auto;
         }
-        
         .upload-section {
             margin-bottom: 30px;
         }
-        
         .upload-section h3 {
             margin-bottom: 15px;
             color: var(--primary);
@@ -84,7 +76,6 @@
             align-items: center;
             gap: 10px;
         }
-        
         .upload-btn {
             display: block;
             width: 100%;
@@ -98,27 +89,22 @@
             text-align: center;
             margin-bottom: 10px;
         }
-        
         .upload-btn:hover {
             background-color: #2980b9;
         }
-        
         .upload-btn input {
             display: none;
         }
-        
         .file-info {
             font-size: 14px;
             color: var(--dark);
             margin-bottom: 15px;
         }
-        
         .loading {
             display: none;
             text-align: center;
             padding: 10px;
         }
-        
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid var(--secondary);
@@ -128,18 +114,15 @@
             animation: spin 2s linear infinite;
             margin: 0 auto 10px;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
         .sidebar.hidden {
             transform: translateX(-100%);
             width: 0;
             overflow: hidden;
         }
-        
         /* Main Content Styles */
         .main-content {
             flex: 1;
@@ -148,13 +131,11 @@
             overflow: hidden;
             transition: margin-left 0.3s ease;
         }
-        
         .main-content.expanded {
             margin-left: 0;
         }
-        
         header {
-            padding: 15px 30px 15px 20px;
+            padding: 20px 30px 20px 20px;
             background: var(--header-gradient);
             color: white;
             display: flex;
@@ -163,7 +144,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: relative;
         }
-        
         .header-title {
             font-size: 24px;
             font-weight: 700;
@@ -171,11 +151,9 @@
             align-items: center;
             gap: 12px;
         }
-        
         .header-title i {
             font-size: 28px;
         }
-        
         .current-date {
             font-size: 16px;
             font-weight: 500;
@@ -183,19 +161,16 @@
             align-items: center;
             gap: 8px;
         }
-        
         .container {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
         }
-        
         .tabs {
             display: flex;
             margin-bottom: 20px;
             border-bottom: 1px solid #ddd;
         }
-        
         .tab {
             padding: 12px 24px;
             cursor: pointer;
@@ -207,20 +182,16 @@
             align-items: center;
             gap: 8px;
         }
-        
         .tab.active {
             color: var(--secondary);
             border-bottom: 3px solid var(--secondary);
         }
-        
         .tab-content {
             display: none;
         }
-        
         .tab-content.active {
             display: block;
         }
-        
         .filter-row {
             display: flex;
             gap: 15px;
@@ -228,26 +199,22 @@
             flex-wrap: wrap;
             align-items: flex-end;
         }
-        
         .filter-group {
             display: flex;
             flex-direction: column;
         }
-        
         .filter-group label {
             margin-bottom: 5px;
             font-weight: 600;
             font-size: 14px;
             color: var(--dark);
         }
-        
         .filter-group select, .filter-group input {
             padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             min-width: 150px;
         }
-        
         .btn {
             padding: 8px 16px;
             background-color: var(--secondary);
@@ -258,11 +225,9 @@
             font-weight: 600;
             transition: background-color 0.3s;
         }
-        
         .btn:hover {
             background-color: #2980b9;
         }
-        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -272,28 +237,23 @@
             border-radius: 8px;
             overflow: hidden;
         }
-        
         th, td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #eee;
         }
-        
         th {
             background-color: var(--primary);
             color: white;
             font-weight: 600;
         }
-        
         tr:hover {
             background-color: #f9f9f9;
         }
-        
         .action-cell {
             display: flex;
             gap: 10px;
         }
-        
         .action-btn {
             background: none;
             border: none;
@@ -301,19 +261,15 @@
             font-size: 16px;
             transition: color 0.3s;
         }
-        
         .edit-btn {
             color: var(--warning);
         }
-        
         .delete-btn {
             color: var(--danger);
         }
-        
         .action-btn:hover {
             opacity: 0.8;
         }
-        
         /* Dashboard Styles */
         .dashboard-content {
             flex: 1;
@@ -321,8 +277,7 @@
             flex-direction: column;
             gap: 25px;
         }
-        
-        /* PERBAIKAN: KPI Cards dalam satu baris dengan scroll horizontal */
+        /* KPI Cards dalam satu baris dengan scroll horizontal */
         .stats-container {
             display: flex;
             overflow-x: auto;
@@ -331,21 +286,17 @@
             padding: 10px 5px 15px;
             scrollbar-width: thin;
         }
-        
         .stats-container::-webkit-scrollbar {
             height: 8px;
         }
-        
         .stats-container::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
         .stats-container::-webkit-scrollbar-thumb {
             background: #c1c1c1;
             border-radius: 4px;
         }
-        
         .stat-card {
             background: var(--kpi-gradient);
             color: white;
@@ -354,7 +305,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
-            min-width: 165px;
+            min-width: 150px;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
@@ -362,7 +313,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .stat-card::before {
             content: '';
             position: absolute;
@@ -372,25 +322,21 @@
             height: 4px;
             background: rgba(255,255,255,0.3);
         }
-        
         .stat-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
-        
         .stat-icon {
             font-size: 24px;
             margin-bottom: 8px;
             opacity: 0.9;
         }
-        
         .stat-value {
             font-size: 22px;
             font-weight: 700;
             margin: 5px 0;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-        
         .stat-label {
             font-size: 11px;
             color: rgba(255,255,255,0.9);
@@ -399,15 +345,13 @@
             text-overflow: ellipsis;
             font-weight: 500;
         }
-        
-        /* PERBAIKAN: Chart area dengan layout yang lebih estetik */
+        /* Chart area dengan layout yang lebih estetik */
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin-bottom: 30px;
         }
-        
         .chart-container {
             background-color: white;
             border-radius: 12px;
@@ -418,12 +362,10 @@
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #f0f0f0;
         }
-        
         .chart-container:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
-        
         .chart-header {
             display: flex;
             justify-content: space-between;
@@ -432,7 +374,6 @@
             padding-bottom: 12px;
             border-bottom: 1px solid #f0f0f0;
         }
-        
         .chart-title {
             font-size: 16px;
             font-weight: 600;
@@ -441,12 +382,10 @@
             align-items: center;
             gap: 8px;
         }
-        
         .chart-title i {
             color: var(--secondary);
             font-size: 18px;
         }
-        
         .chart-legend {
             display: flex;
             gap: 12px;
@@ -457,27 +396,23 @@
             padding-top: 15px;
             border-top: 1px solid #f0f0f0;
         }
-        
         .legend-item {
             display: flex;
             align-items: center;
             gap: 5px;
             white-space: nowrap;
         }
-        
         .legend-color {
             width: 10px;
             height: 10px;
             border-radius: 2px;
         }
-        
         .chart-box {
             flex: 1;
             min-height: 280px;
             position: relative;
         }
-        
-        /* PERBAIKAN: Chart container untuk Qty Order Per Day yang lebih lebar */
+        /* Chart container untuk Qty Order Per Day yang lebih lebar */
         .wide-chart-container {
             grid-column: 1 / -1;
             background-color: white;
@@ -489,18 +424,15 @@
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #f0f0f0;
         }
-        
         .wide-chart-container:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
-        
         .wide-chart-box {
             flex: 1;
             min-height: 320px;
             position: relative;
         }
-        
         .status-badge {
             display: inline-block;
             padding: 4px 10px;
@@ -508,68 +440,56 @@
             font-size: 12px;
             font-weight: 600;
         }
-        
         .status-pending {
             background-color: #fff3cd;
             color: #856404;
         }
-        
         .status-confirmed {
             background-color: #d1ecf1;
             color: #0c5460;
         }
-        
         .status-delivered {
             background-color: #d4edda;
             color: #155724;
         }
-        
         .status-canceled {
             background-color: #f8d7da;
             color: #721c24;
         }
-        
         .status-normal {
             background-color: #d1ecf1;
             color: #0c5460;
         }
-        
         .status-suddenly {
             background-color: #f8d7da;
             color: #721c24;
         }
-        
         /* Truck Input */
         .truck-input-section {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
-        
         .target-volume-section {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
-        
         .truck-input-group {
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
         }
-        
         .truck-input-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
         }
-        
         .truck-plant-name {
             flex: 1;
             font-size: 14px;
         }
-        
         .truck-input {
             width: 80px;
             padding: 4px 8px;
@@ -577,7 +497,6 @@
             border-radius: 4px;
             text-align: center;
         }
-        
         /* Toggle Button */
         .sidebar-toggle-btn {
             position: fixed;
@@ -594,18 +513,15 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
-        
         /* Project Remain Details */
         .project-details {
             margin-top: 20px;
         }
-        
         .project-details h3 {
             margin-bottom: 15px;
             color: var(--primary);
             font-size: 18px;
         }
-        
         /* Responsive Styles */
         @media (max-width: 1024px) {
             .sidebar {
@@ -615,86 +531,68 @@
                 bottom: 0;
                 z-index: 1000;
             }
-            
             .sidebar.hidden {
                 transform: translateX(-100%);
             }
-            
             .main-content {
                 margin-left: 0;
             }
-            
             .chart-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
             .wide-chart-container {
                 grid-column: 1 / -1;
             }
         }
-        
         @media (max-width: 768px) {
             .filter-row {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
             .filter-group {
                 width: 100%;
             }
-            
             .filter-group select, .filter-group input {
                 width: 100%;
             }
-            
             table {
                 display: block;
                 overflow-x: auto;
             }
-            
             header {
                 padding: 15px 20px 15px 50px;
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
             }
-            
             .header-title {
                 font-size: 20px;
             }
-            
             .truck-input-row {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
-            
             .truck-input {
                 width: 100%;
             }
-            
             .chart-grid {
                 grid-template-columns: 1fr;
             }
-            
             .chart-box {
                 min-height: 250px;
             }
-            
             .wide-chart-box {
                 min-height: 280px;
             }
-            
             .stat-card {
                 min-width: 130px;
                 padding: 12px;
             }
-            
             .stat-value {
                 font-size: 18px;
             }
         }
-
         .filter-section h3 {
             margin-bottom: 15px;
             color: var(--primary);
@@ -703,7 +601,6 @@
             align-items: center;
             gap: 10px;
         }
-        
         /* Modal Styles */
         .modal {
             display: none;
@@ -717,7 +614,6 @@
             justify-content: center;
             align-items: center;
         }
-        
         .modal-content {
             background-color: white;
             padding: 30px;
@@ -726,20 +622,17 @@
             max-width: 500px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        
         .modal-title {
             font-size: 20px;
             font-weight: 600;
             color: var(--primary);
         }
-        
         .close-btn {
             background: none;
             border: none;
@@ -747,37 +640,31 @@
             cursor: pointer;
             color: var(--dark);
         }
-        
         .form-group {
             margin-bottom: 15px;
         }
-        
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
             color: var(--dark);
         }
-        
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        
         .form-group textarea {
             min-height: 80px;
             resize: vertical;
         }
-        
         .modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
             margin-top: 20px;
         }
-        
         /* Editable Qty */
         .editable-qty {
             cursor: pointer;
@@ -785,18 +672,15 @@
             border-radius: 4px;
             transition: background-color 0.3s;
         }
-        
         .editable-qty:hover {
             background-color: #f0f8ff;
         }
-        
         /* Date Info */
         .date-info {
             font-size: 11px;
             color: #666;
             margin-top: 3px;
         }
-        
         /* Compact Filter Row */
         .compact-filter-row {
             display: flex;
@@ -805,20 +689,17 @@
             flex-wrap: wrap;
             align-items: flex-end;
         }
-        
         .compact-filter-group {
             display: flex;
             flex-direction: column;
             min-width: 140px;
         }
-        
         .compact-filter-group label {
             margin-bottom: 5px;
             font-weight: 600;
             font-size: 13px;
             color: var(--dark);
         }
-        
         .compact-filter-group select, .compact-filter-group input {
             padding: 8px 10px;
             border: 1px solid #ddd;
@@ -832,7 +713,6 @@
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
         <i class="fas fa-bars"></i>
     </button>
-
     <!-- Sidebar -->
     <div class="sidebar hidden" id="sidebar">
         <div class="sidebar-header">
@@ -854,7 +734,6 @@
                     <p>Memproses file...</p>
                 </div>
             </div>
-            
             <!-- Dashboard Filters -->
             <div class="filter-section" id="dashboardFilters">
                 <h3><i class="fas fa-filter"></i> Dashboard Filters</h3>
@@ -887,7 +766,6 @@
                 <div class="filter-group">
                     <button class="btn" id="dashboard-apply-filter">Apply Filter</button>
                 </div>
-                
                 <!-- Truck Input Section -->
                 <div class="truck-input-section">
                     <h3><i class="fas fa-truck"></i> Jumlah Truck Mixer</h3>
@@ -896,7 +774,6 @@
                         <p class="file-info">Upload file Excel untuk mengisi data plant</p>
                     </div>
                 </div>
-                
                 <!-- Target Volume Section -->
                 <div class="target-volume-section">
                     <h3><i class="fas fa-bullseye"></i> Target Volume per Day</h3>
@@ -908,7 +785,6 @@
             </div>
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="main-content expanded" id="mainContent">
         <header>
@@ -921,7 +797,6 @@
                 <span id="currentDate">6 November 2025</span>
             </div>
         </header>
-        
         <div class="container">
             <div class="tabs">
                 <div class="tab active" data-tab="status-order">
@@ -934,7 +809,6 @@
                     <i class="fas fa-chart-bar"></i> Dashboard
                 </div>
             </div>
-            
             <!-- Tab Status Order -->
             <div class="tab-content active" id="status-order">
                 <div class="compact-filter-row">
@@ -964,7 +838,6 @@
                         <button class="btn" id="status-apply-filter" style="margin-top: 20px;">Apply Filter</button>
                     </div>
                 </div>
-                
                 <table id="status-table">
                     <thead>
                         <tr>
@@ -986,7 +859,6 @@
                         </tr>
                     </tbody>
                 </table>
-                
                 <div class="chart-container">
                     <div class="chart-title">Status Order (Normal vs Suddenly)</div>
                     <div class="chart-box">
@@ -994,7 +866,6 @@
                     </div>
                 </div>
             </div>
-            
             <!-- Tab List Order -->
             <div class="tab-content" id="list-order">
                 <div class="compact-filter-row">
@@ -1026,7 +897,6 @@
                         <button class="btn" id="apply-filter" style="margin-top: 20px;">Apply Filter</button>
                     </div>
                 </div>
-                
                 <table id="order-table">
                     <thead>
                         <tr>
@@ -1050,12 +920,16 @@
                     </tbody>
                 </table>
             </div>
-            
             <!-- Tab Dashboard -->
             <div class="tab-content" id="dashboard">
                 <div class="dashboard-content">
-                    <!-- PERBAIKAN: KPI Cards dalam satu baris dengan scroll horizontal -->
+                    <!-- KPI Cards dalam satu baris dengan scroll horizontal -->
                     <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-industry"></i></div>
+                            <div class="stat-value" id="plant-remain-count">-</div>
+                            <div class="stat-label">Plant Remain</div>
+                        </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
                             <div class="stat-value" id="total-target-volume">-</div>
@@ -1107,8 +981,7 @@
                             <div class="stat-label">Total Truck Mixer</div>
                         </div>
                     </div>
-                    
-                    <!-- PERBAIKAN: Chart area dengan layout grid yang lebih estetik -->
+                    <!-- Chart area dengan layout grid yang lebih estetik -->
                     <div class="chart-grid">
                         <div class="chart-container">
                             <div class="chart-header">
@@ -1120,10 +993,9 @@
                                 <canvas id="performOrderChart"></canvas>
                             </div>
                             <div class="chart-legend" id="performOrderLegend">
-                                <!-- Legend akan diisi oleh JavaScript -->
+                                <!-- Legend will be filled by JavaScript -->
                             </div>
                         </div>
-                        
                         <div class="chart-container">
                             <div class="chart-header">
                                 <div class="chart-title" id="performProjectTitle">
@@ -1134,10 +1006,9 @@
                                 <canvas id="performProjectChart"></canvas>
                             </div>
                             <div class="chart-legend" id="performProjectLegend">
-                                <!-- Legend akan diisi oleh JavaScript -->
+                                <!-- Legend will be filled by JavaScript -->
                             </div>
                         </div>
-                        
                         <div class="chart-container">
                             <div class="chart-header">
                                 <div class="chart-title" id="statusDistributionTitle">
@@ -1148,10 +1019,9 @@
                                 <canvas id="statusDistributionChart"></canvas>
                             </div>
                             <div class="chart-legend" id="statusDistributionLegend">
-                                <!-- Legend akan diisi oleh JavaScript -->
+                                <!-- Legend will be filled by JavaScript -->
                             </div>
                         </div>
-                        
                         <div class="wide-chart-container">
                             <div class="chart-header">
                                 <div class="chart-title" id="qtyOrderPerDayTitle">
@@ -1161,10 +1031,9 @@
                             <div class="wide-chart-box">
                                 <canvas id="qtyOrderPerDayChart"></canvas>
                             </div>
-                            <!-- PERBAIKAN: Hilangkan legend untuk Qty Order Per Day -->
+                            <!-- Legend for Qty Order Per Day is omitted -->
                         </div>
                     </div>
-                    
                     <div class="chart-container project-details">
                         <div class="chart-title">
                             <i class="fas fa-table"></i> Project Remain Details
@@ -1192,7 +1061,6 @@
             </div>
         </div>
     </div>
-
     <!-- Edit Modal -->
     <div class="modal" id="editModal">
         <div class="modal-content">
@@ -1220,7 +1088,6 @@
             </form>
         </div>
     </div>
-
     <script>
         // Variabel global untuk menyimpan data
         let orderData = [];
@@ -1229,29 +1096,24 @@
         let targetVolumes = {};
         let currentEditingRow = null;
         let currentEditingField = null;
+        let projectRemainData = []; // Variabel global untuk menyimpan data project remain
 
         // Fungsi untuk memproses file Excel
         function processExcelFile(file) {
             const loadingIndicator = document.getElementById('loadingIndicator');
             loadingIndicator.style.display = 'block';
-            
             const reader = new FileReader();
-            
             reader.onload = function(e) {
                 try {
                     const data = new Uint8Array(e.target.result);
                     const workbook = XLSX.read(data, { type: 'array' });
-                    
                     // Ambil sheet pertama
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
-                    
                     // Konversi ke JSON
                     const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                    
                     // Proses data
                     processData(jsonData);
-                    
                     loadingIndicator.style.display = 'none';
                 } catch (error) {
                     console.error('Error processing file:', error);
@@ -1259,12 +1121,10 @@
                     loadingIndicator.style.display = 'none';
                 }
             };
-            
             reader.onerror = function() {
                 alert('Error reading file');
                 loadingIndicator.style.display = 'none';
             };
-            
             reader.readAsArrayBuffer(file);
         }
 
@@ -1272,46 +1132,38 @@
         function processData(data) {
             // Skip header row
             const rows = data.slice(1);
-            
             orderData = rows.map(row => {
                 // Format tanggal dari Delivery Date (kolom F/6)
                 const deliveryDate = row[6];
                 const createDate = row[20]; // Create Date (kolom 20)
-                
                 let formattedDeliveryDate = '';
                 let formattedCreateDate = '';
-                
                 // Format Delivery Date
                 if (deliveryDate) {
                     formattedDeliveryDate = formatDateFromExcel(deliveryDate);
                 }
-                
                 // Format Create Date
                 if (createDate) {
                     formattedCreateDate = formatDateFromExcel(createDate);
                 }
-                
-                // Hitung status (Normal/Suddenly)
-                let orderStatusType = "Unknown";
+                // Hitung status (Normal/Suddenly) dengan logika yang lebih baik
+                let orderStatusType = "Normal"; // Default ke Normal
                 if (formattedDeliveryDate && formattedCreateDate) {
                     const delivery = parseDate(formattedDeliveryDate);
                     const create = parseDate(formattedCreateDate);
-                    
                     if (delivery && create) {
                         // Hitung selisih hari antara Create Date dan Delivery Date
                         const diffTime = delivery.getTime() - create.getTime();
                         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                        
-                        // Jika Create Date < Delivery Date = Normal
+                        // Logika yang lebih jelas
                         // Jika Create Date = Delivery Date = Suddenly
-                        if (diffDays > 0) {
-                            orderStatusType = "Normal";
-                        } else if (diffDays === 0) {
+                        if (diffDays === 0) {
                             orderStatusType = "Suddenly";
                         }
+                        // Jika Create Date < Delivery Date = Normal (default)
+                        // Jika Create Date > Delivery Date = Normal (tetap dianggap normal)
                     }
                 }
-                
                 // Mapping kolom sesuai dengan struktur file
                 return {
                     tanggal: formattedDeliveryDate, // Delivery Date yang sudah diformat
@@ -1322,17 +1174,16 @@
                     siteName: row[5] || '', // Site Name
                     qtyOrder: parseFloat(row[9]) || 0, // Order Qty
                     qtyDelivery: parseFloat(row[11]) || 0, // Delivered Qty
-                    qtyRemain: (parseFloat(row[9]) || 0) - (parseFloat(row[11]) || 0), // Calculate remain
+                    // PERBAIKAN: qtyRemain menjadi 0 jika status adalah Cancel
+                    qtyRemain: ((row[12] || '') === '90 : Cancel') ? 0 : (parseFloat(row[9]) || 0) - (parseFloat(row[11]) || 0),
                     qtyCancel: (row[12] === '90 : Cancel') ? (parseFloat(row[9]) || 0) : 0, // Cancel Qty
                     remarks: row[21] || '', // Remark
                     orderStatusType: orderStatusType // Normal/Suddenly
                 };
             }).filter(item => item.tanggal); // Hanya data dengan tanggal
-
             // Initialize truck counts dan target volumes
             initializeTruckCounts();
             initializeTargetVolumes();
-            
             // Update UI dengan data baru
             populateStatusTable(orderData);
             populateOrderTable(orderData);
@@ -1345,11 +1196,9 @@
         function initializeTruckCounts() {
             const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
             truckCounts = {};
-            
             plants.forEach(plant => {
                 truckCounts[plant] = 0; // Default value
             });
-            
             updateTruckInputs();
         }
 
@@ -1357,11 +1206,9 @@
         function initializeTargetVolumes() {
             const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
             targetVolumes = {};
-            
             plants.forEach(plant => {
                 targetVolumes[plant] = 0; // Default value
             });
-            
             updateTargetVolumeInputs();
         }
 
@@ -1369,18 +1216,14 @@
         function updateTruckInputs() {
             const container = document.getElementById('truck-inputs-container');
             container.innerHTML = '';
-            
             const plants = Object.keys(truckCounts).sort();
-            
             if (plants.length === 0) {
                 container.innerHTML = '<p class="file-info">Upload file Excel untuk mengisi data plant</p>';
                 return;
             }
-            
             plants.forEach(plant => {
                 const row = document.createElement('div');
                 row.className = 'truck-input-row';
-                
                 row.innerHTML = `
                     <span class="truck-plant-name">${plant}</span>
                     <input type="number" 
@@ -1390,7 +1233,6 @@
                            data-plant="${plant}"
                            onchange="updateTruckCount('${plant}', this.value)">
                 `;
-                
                 container.appendChild(row);
             });
         }
@@ -1399,18 +1241,14 @@
         function updateTargetVolumeInputs() {
             const container = document.getElementById('target-volume-inputs-container');
             container.innerHTML = '';
-            
             const plants = Object.keys(targetVolumes).sort();
-            
             if (plants.length === 0) {
                 container.innerHTML = '<p class="file-info">Upload file Excel untuk mengisi data plant</p>';
                 return;
             }
-            
             plants.forEach(plant => {
                 const row = document.createElement('div');
                 row.className = 'truck-input-row';
-                
                 row.innerHTML = `
                     <span class="truck-plant-name">${plant}</span>
                     <input type="number" 
@@ -1421,7 +1259,6 @@
                            data-plant="${plant}"
                            onchange="updateTargetVolume('${plant}', this.value)">
                 `;
-                
                 container.appendChild(row);
             });
         }
@@ -1441,7 +1278,6 @@
         // Fungsi untuk memformat tanggal dari Excel
         function formatDateFromExcel(dateValue) {
             if (!dateValue) return '';
-            
             if (typeof dateValue === 'string') {
                 // Jika sudah dalam format string, return as is
                 return dateValue;
@@ -1459,7 +1295,6 @@
                     console.warn('Invalid date format:', dateValue);
                 }
             }
-            
             return '';
         }
 
@@ -1467,28 +1302,22 @@
         function formatDate(date) {
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-            
             const day = date.getDate().toString().padStart(2, '0');
             const month = months[date.getMonth()];
             const year = date.getFullYear();
-            
             return `${day} ${month} ${year}`;
         }
 
         // Fungsi untuk parsing tanggal dari format "06 Nov 2025"
         function parseDate(dateStr) {
             if (!dateStr) return null;
-            
             const parts = dateStr.split(' ');
             if (parts.length !== 3) return null;
-            
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
             const day = parseInt(parts[0]);
             const month = months.indexOf(parts[1]);
             const year = parseInt(parts[2]);
-            
             if (month === -1 || isNaN(day) || isNaN(year)) return null;
-            
             return new Date(year, month, day);
         }
 
@@ -1496,25 +1325,19 @@
         function populateStatusTable(data) {
             const tableBody = document.querySelector('#status-table tbody');
             tableBody.innerHTML = '';
-            
             if (data.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Tidak ada data</td></tr>';
                 return;
             }
-            
             data.forEach((item, index) => {
                 const row = document.createElement('tr');
-                
                 // Status badge
                 let statusBadge = '';
                 if (item.orderStatusType === "Normal") {
                     statusBadge = '<span class="status-badge status-normal">Normal</span>';
                 } else if (item.orderStatusType === "Suddenly") {
                     statusBadge = '<span class="status-badge status-suddenly">Suddenly</span>';
-                } else {
-                    statusBadge = `<span class="status-badge">${item.orderStatusType}</span>`;
                 }
-                
                 // Order Status badge
                 let orderStatusBadge = '';
                 if (item.status.includes('Pending')) {
@@ -1528,7 +1351,6 @@
                 } else {
                     orderStatusBadge = `<span class="status-badge">${item.status}</span>`;
                 }
-                
                 row.innerHTML = `
                     <td>${item.tanggal}</td>
                     <td>${item.createDate}</td>
@@ -1548,10 +1370,8 @@
                         </button>
                     </td>
                 `;
-                
                 tableBody.appendChild(row);
             });
-            
             // Add event listeners to editable quantities
             document.querySelectorAll('.editable-qty').forEach(qty => {
                 qty.addEventListener('click', function() {
@@ -1560,7 +1380,6 @@
                     openEditModal(data[index], index, field);
                 });
             });
-            
             // Add event listeners to edit buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -1568,7 +1387,6 @@
                     openEditModal(data[index], index, 'all');
                 });
             });
-            
             // Update chart status order
             updateStatusOrderChart(data);
         }
@@ -1577,12 +1395,10 @@
         function openEditModal(item, index, field) {
             currentEditingRow = index;
             currentEditingField = field;
-            
             // Set values in modal
             document.getElementById('edit-qty-order').value = item.qtyOrder;
             document.getElementById('edit-qty-delivery').value = item.qtyDelivery;
             document.getElementById('edit-qty-cancel').value = item.qtyCancel;
-            
             // Show modal
             document.getElementById('editModal').style.display = 'flex';
         }
@@ -1591,15 +1407,12 @@
         function populateOrderTable(data) {
             const tableBody = document.querySelector('#order-table tbody');
             tableBody.innerHTML = '';
-            
             if (data.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="11" style="text-align: center;">Tidak ada data</td></tr>';
                 return;
             }
-            
             data.forEach((item, index) => {
                 const row = document.createElement('tr');
-                
                 // Status badge
                 let statusBadge = '';
                 if (item.status.includes('Pending')) {
@@ -1613,7 +1426,6 @@
                 } else {
                     statusBadge = `<span class="status-badge">${item.status}</span>`;
                 }
-                
                 row.innerHTML = `
                     <td>${item.tanggal}</td>
                     <td>${item.plant}</td>
@@ -1634,10 +1446,8 @@
                         </button>
                     </td>
                 `;
-                
                 tableBody.appendChild(row);
             });
-            
             // Add event listeners to editable quantities
             document.querySelectorAll('.editable-qty').forEach(qty => {
                 qty.addEventListener('click', function() {
@@ -1646,7 +1456,6 @@
                     openEditModal(data[index], index, field);
                 });
             });
-            
             // Add event listeners to edit buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -1664,13 +1473,11 @@
                 document.getElementById('dashboard-plant-filter'),
                 document.getElementById('status-plant-filter')
             ];
-            
             plantSelects.forEach(select => {
                 // Clear existing options except the first one
                 while (select.options.length > 1) {
                     select.remove(1);
                 }
-                
                 // Add plant options
                 plants.forEach(plant => {
                     const option = document.createElement('option');
@@ -1681,61 +1488,63 @@
             });
         }
 
-        // Fungsi untuk update dashboard statistics
+        // PERBAIKAN: Fungsi untuk update dashboard statistics
         function updateDashboardStats(data) {
             // Filter data berdasarkan dashboard filter
             const filteredData = filterDataForDashboard(data);
+
+            // PERBAIKAN: Hitung Plant Remain berdasarkan project remain yang ditampilkan
+            // Pertama, update project remain details untuk mendapatkan data yang benar
+            updateProjectRemainDetails(filteredData);
             
-            // Hitung statistik
+            // PERBAIKAN: Hitung Plant Remain berdasarkan data project remain yang sudah difilter
+            const plantRemainCount = new Set(projectRemainData.map(item => item.plant)).size;
+
+            // Hitung statistik lainnya...
             const totalOrderQty = filteredData.reduce((sum, item) => sum + item.qtyOrder, 0);
             const totalDelivery = filteredData.reduce((sum, item) => sum + item.qtyDelivery, 0);
-            const totalRemain = filteredData.reduce((sum, item) => sum + (item.qtyRemain > 0 ? item.qtyRemain : 0), 0);
+            // qtyRemain sekarang sudah benar berdasarkan logika di processData
+            const totalRemain = filteredData.reduce((sum, item) => sum + item.qtyRemain, 0);
             const totalCancel = filteredData.reduce((sum, item) => sum + item.qtyCancel, 0);
-            
+
             // Hitung total project (unique siteNo per tanggal)
             const projectSet = new Set();
             const projectDeliveredSet = new Set();
             const projectRemainSet = new Set();
             const projectCancelSet = new Set();
-            
             filteredData.forEach(item => {
                 const key = `${item.siteNo}-${item.tanggal}`;
                 projectSet.add(key);
-                
                 if (item.qtyDelivery > 0) {
                     projectDeliveredSet.add(key);
                 }
-                
+                // Gunakan item.qtyRemain yang sudah difilter
                 if (item.qtyRemain > 0) {
                     projectRemainSet.add(key);
                 }
-                
                 if (item.status.includes('Cancel')) {
                     projectCancelSet.add(key);
                 }
             });
-            
             const totalProject = projectSet.size;
             const totalProjectDelivered = projectDeliveredSet.size;
             const totalProjectRemain = projectRemainSet.size;
             const totalProjectCancel = projectCancelSet.size;
-            
+
             // Total truck mixer - terkoneksi dengan filter plant
             const selectedPlant = document.getElementById('dashboard-plant-filter').value;
             let totalTruckCount = 0;
             let totalTargetVolume = 0;
-            
             if (selectedPlant) {
-                // Jika plant tertentu dipilih, hanya ambil truck count dan target volume untuk plant tersebut
                 totalTruckCount = truckCounts[selectedPlant] || 0;
                 totalTargetVolume = targetVolumes[selectedPlant] || 0;
             } else {
-                // Jika "All Plants" dipilih, jumlahkan semua truck count dan target volume
                 totalTruckCount = Object.values(truckCounts).reduce((sum, count) => sum + count, 0);
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
-            
+
             // Update UI
+            document.getElementById('plant-remain-count').textContent = plantRemainCount; // Update Plant Remain KPI
             document.getElementById('total-order-qty').textContent = totalOrderQty.toFixed(1);
             document.getElementById('total-delivery').textContent = totalDelivery.toFixed(1);
             document.getElementById('total-remain').textContent = totalRemain.toFixed(1);
@@ -1746,27 +1555,22 @@
             document.getElementById('total-project-cancel').textContent = totalProjectCancel;
             document.getElementById('total-truck-count').textContent = totalTruckCount;
             document.getElementById('total-target-volume').textContent = totalTargetVolume.toFixed(1);
-            
-            // Update project remain details
-            updateProjectRemainDetails(filteredData);
         }
 
-        // Fungsi untuk update project remain details
+        // PERBAIKAN: Fungsi untuk update project remain details
         function updateProjectRemainDetails(data) {
             const tableBody = document.querySelector('#project-remain-table tbody');
             tableBody.innerHTML = '';
-            
             // Filter data untuk project dengan qty remain > 0
             const remainProjects = data.filter(item => item.qtyRemain > 0);
-            
+            // PERBAIKAN: Simpan data project remain ke variabel global
+            projectRemainData = remainProjects;
             if (remainProjects.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Tidak ada data project remain</td></tr>';
                 return;
             }
-            
             remainProjects.forEach(item => {
                 const row = document.createElement('tr');
-                
                 row.innerHTML = `
                     <td>${item.tanggal}</td>
                     <td>${item.siteNo}</td>
@@ -1776,7 +1580,6 @@
                     <td>${item.qtyDelivery}</td>
                     <td>${item.qtyRemain}</td>
                 `;
-                
                 tableBody.appendChild(row);
             });
         }
@@ -1788,49 +1591,38 @@
                 if (chart) chart.destroy();
             });
             currentCharts = {};
-            
             // Filter data untuk dashboard
             const filteredData = filterDataForDashboard(data);
-            
             // Data untuk Perform Order Chart
             const totalOrderQty = filteredData.reduce((sum, item) => sum + item.qtyOrder, 0);
             const totalDeliveryQty = filteredData.reduce((sum, item) => sum + item.qtyDelivery, 0);
             const totalRemainQty = filteredData.reduce((sum, item) => sum + (item.qtyRemain > 0 ? item.qtyRemain : 0), 0);
             const totalCancelQty = filteredData.reduce((sum, item) => sum + item.qtyCancel, 0);
-            
             // Data untuk Perform Project Chart
             const projectSet = new Set();
             const projectDeliveredSet = new Set();
             const projectRemainSet = new Set();
             const projectCancelSet = new Set();
-            
             filteredData.forEach(item => {
                 const key = `${item.siteNo}-${item.tanggal}`;
                 projectSet.add(key);
-                
                 if (item.qtyDelivery > 0) {
                     projectDeliveredSet.add(key);
                 }
-                
                 if (item.qtyRemain > 0) {
                     projectRemainSet.add(key);
                 }
-                
                 if (item.status.includes('Cancel')) {
                     projectCancelSet.add(key);
                 }
             });
-            
             const totalProject = projectSet.size;
             const totalProjectDelivered = projectDeliveredSet.size;
             const totalProjectRemain = projectRemainSet.size;
             const totalProjectCancel = projectCancelSet.size;
-            
             // Data untuk Status Distribution Chart
             const normalCount = filteredData.filter(item => item.orderStatusType === "Normal").length;
             const suddenlyCount = filteredData.filter(item => item.orderStatusType === "Suddenly").length;
-            const unknownCount = filteredData.filter(item => item.orderStatusType === "Unknown").length;
-            
             // Data untuk Qty Order Per Day Chart
             const orderByDay = {};
             filteredData.forEach(item => {
@@ -1840,23 +1632,18 @@
                     orderByDay[item.tanggal] = item.qtyOrder;
                 }
             });
-            
             const sortedDates = Object.keys(orderByDay).sort((a, b) => {
                 return parseDate(a).getTime() - parseDate(b).getTime();
             });
-            
             const orderQtyPerDay = sortedDates.map(date => orderByDay[date]);
-            
             // Mendapatkan nama plant yang dipilih untuk judul chart
             const selectedPlant = document.getElementById('dashboard-plant-filter').value;
             const plantTitle = selectedPlant ? selectedPlant : "East All Area";
-            
             // Update judul chart
             document.getElementById('performOrderTitle').innerHTML = `<i class="fas fa-chart-bar"></i> Perform Order - ${plantTitle}`;
             document.getElementById('performProjectTitle').innerHTML = `<i class="fas fa-chart-pie"></i> Perform Project - ${plantTitle}`;
             document.getElementById('statusDistributionTitle').innerHTML = `<i class="fas fa-chart-line"></i> Status Distribution - ${plantTitle}`;
             document.getElementById('qtyOrderPerDayTitle').innerHTML = `<i class="fas fa-calendar-alt"></i> Qty Order Per Day - ${plantTitle}`;
-            
             // Total Target Volume untuk chart
             let totalTargetVolume = 0;
             if (selectedPlant) {
@@ -1864,10 +1651,8 @@
             } else {
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
-            
             // Chart 1: Perform Order (Bar Chart)
             const performOrderCtx = document.getElementById('performOrderChart').getContext('2d');
-            
             // Update legend untuk Perform Order
             const performOrderLegend = document.getElementById('performOrderLegend');
             performOrderLegend.innerHTML = `
@@ -1892,7 +1677,6 @@
                     <span>Cancel</span>
                 </div>
             `;
-            
             currentCharts.performOrder = new Chart(performOrderCtx, {
                 type: 'bar',
                 data: {
@@ -1958,10 +1742,8 @@
                     }
                 }
             });
-            
             // Chart 2: Perform Project (Bar Chart)
             const performProjectCtx = document.getElementById('performProjectChart').getContext('2d');
-            
             // Update legend untuk Perform Project
             const performProjectLegend = document.getElementById('performProjectLegend');
             performProjectLegend.innerHTML = `
@@ -1982,7 +1764,6 @@
                     <span>Cancel</span>
                 </div>
             `;
-            
             currentCharts.performProject = new Chart(performProjectCtx, {
                 type: 'bar',
                 data: {
@@ -2046,10 +1827,8 @@
                     }
                 }
             });
-            
             // Chart 3: Status Distribution (Doughnut Chart)
             const statusDistributionCtx = document.getElementById('statusDistributionChart').getContext('2d');
-            
             // Update legend untuk Status Distribution
             const statusDistributionLegend = document.getElementById('statusDistributionLegend');
             statusDistributionLegend.innerHTML = `
@@ -2061,27 +1840,20 @@
                     <div class="legend-color" style="background-color: #f8d7da"></div>
                     <span>Suddenly</span>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f0f0f0"></div>
-                    <span>Unknown</span>
-                </div>
             `;
-            
             currentCharts.statusDistribution = new Chart(statusDistributionCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Normal', 'Suddenly', 'Unknown'],
+                    labels: ['Normal', 'Suddenly'],
                     datasets: [{
-                        data: [normalCount, suddenlyCount, unknownCount],
+                        data: [normalCount, suddenlyCount],
                         backgroundColor: [
                             '#d4edda',
-                            '#f8d7da',
-                            '#f0f0f0'
+                            '#f8d7da'
                         ],
                         borderColor: [
                             '#155724',
-                            '#721c24',
-                            '#6c757d'
+                            '#721c24'
                         ],
                         borderWidth: 1
                     }]
@@ -2112,13 +1884,10 @@
                     }
                 }
             });
-            
             // Chart 4: Qty Order Per Day (Line Chart)
             const qtyOrderPerDayCtx = document.getElementById('qtyOrderPerDayChart').getContext('2d');
-            
-            // PERBAIKAN: Hilangkan legend untuk Qty Order Per Day
+            // Legend untuk Qty Order Per Day dihilangkan
             // Tidak ada kode untuk menambahkan legend di sini
-            
             currentCharts.qtyOrderPerDay = new Chart(qtyOrderPerDayCtx, {
                 type: 'line',
                 data: {
@@ -2191,29 +1960,23 @@
         function updateStatusOrderChart(data) {
             const normalCount = data.filter(item => item.orderStatusType === "Normal").length;
             const suddenlyCount = data.filter(item => item.orderStatusType === "Suddenly").length;
-            const unknownCount = data.filter(item => item.orderStatusType === "Unknown").length;
-            
             const statusCtx = document.getElementById('statusOrderChart').getContext('2d');
-            
             if (currentCharts.statusOrder) {
                 currentCharts.statusOrder.destroy();
             }
-            
             currentCharts.statusOrder = new Chart(statusCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Normal', 'Suddenly', 'Unknown'],
+                    labels: ['Normal', 'Suddenly'],
                     datasets: [{
-                        data: [normalCount, suddenlyCount, unknownCount],
+                        data: [normalCount, suddenlyCount],
                         backgroundColor: [
                             '#d4edda',
-                            '#f8d7da',
-                            '#f0f0f0'
+                            '#f8d7da'
                         ],
                         borderColor: [
                             '#155724',
-                            '#721c24',
-                            '#6c757d'
+                            '#721c24'
                         ],
                         borderWidth: 1
                     }]
@@ -2234,13 +1997,12 @@
             });
         }
 
-        // Fungsi untuk filter data dashboard
+        // Fungsi untuk filter data dashboard dengan perbaikan parsing tanggal
         function filterDataForDashboard(data) {
             const startDate = document.getElementById('dashboard-start-date').value;
             const endDate = document.getElementById('dashboard-end-date').value;
             const plant = document.getElementById('dashboard-plant-filter').value;
             const status = document.getElementById('dashboard-status-filter').value;
-            
             return filterData(data, startDate, endDate, plant, status);
         }
 
@@ -2250,28 +2012,32 @@
             const endDate = document.getElementById('status-end-date').value;
             const plant = document.getElementById('status-plant-filter').value;
             const statusType = document.getElementById('status-type-filter').value;
-            
             let filteredData = filterData(data, startDate, endDate, plant, '');
-            
             if (statusType) {
                 filteredData = filteredData.filter(item => item.orderStatusType === statusType);
             }
-            
             return filteredData;
         }
 
-        // Fungsi untuk filter data
+        // Fungsi untuk filter data dengan perbaikan parsing tanggal
         function filterData(data, startDate, endDate, plant, status) {
             return data.filter(item => {
-                // Parse tanggal dari format "06 Nov 2025"
+                // Parsing tanggal yang lebih robust
                 const itemDate = parseDate(item.tanggal);
-                const start = startDate ? new Date(startDate) : new Date('1900-01-01');
-                const end = endDate ? new Date(endDate) : new Date('2100-12-31');
-                
-                const dateMatch = itemDate >= start && itemDate <= end;
+                // Jika parsing tanggal gagal, skip item ini
+                if (!itemDate) return false;
+                // Handle filter tanggal
+                let dateMatch = true;
+                if (startDate || endDate) {
+                    const start = startDate ? new Date(startDate) : new Date('1900-01-01');
+                    const end = endDate ? new Date(endDate) : new Date('2100-12-31');
+                    // Set waktu ke awal hari untuk start dan akhir hari untuk end
+                    start.setHours(0, 0, 0, 0);
+                    end.setHours(23, 59, 59, 999);
+                    dateMatch = itemDate >= start && itemDate <= end;
+                }
                 const plantMatch = !plant || item.plant === plant;
                 const statusMatch = !status || item.status === status;
-                
                 return dateMatch && plantMatch && statusMatch;
             });
         }
@@ -2280,7 +2046,6 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            
             sidebar.classList.toggle('hidden');
             mainContent.classList.toggle('expanded');
         }
@@ -2291,114 +2056,100 @@
             const now = new Date();
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('currentDate').textContent = now.toLocaleDateString('id-ID', options);
-            
             // Set default dates sesuai permintaan
             const startDate = new Date('2025-10-30');
             const endDate = new Date('2025-11-06');
-            
             document.getElementById('start-date').valueAsDate = startDate;
             document.getElementById('end-date').valueAsDate = endDate;
             document.getElementById('dashboard-start-date').valueAsDate = startDate;
             document.getElementById('dashboard-end-date').valueAsDate = endDate;
             document.getElementById('status-start-date').valueAsDate = startDate;
             document.getElementById('status-end-date').valueAsDate = endDate;
-            
             // File upload handler
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
-                
                 // Validasi ukuran file (max 200MB)
                 if (file.size > 200 * 1024 * 1024) {
                     alert('File terlalu besar. Maksimal 200MB.');
                     return;
                 }
-                
                 // Validasi tipe file
                 if (!file.name.match(/\.(xlsx|xls)$/)) {
                     alert('Hanya file Excel yang diizinkan.');
                     return;
                 }
-                
                 document.getElementById('fileInfo').textContent = `File: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
                 processExcelFile(file);
             });
-            
             // Tab switching
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', function() {
                     // Remove active class from all tabs
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
                     // Add active class to clicked tab
                     this.classList.add('active');
                     document.getElementById(this.dataset.tab).classList.add('active');
                 });
             });
-            
             // Apply filter untuk status order
             document.getElementById('status-apply-filter').addEventListener('click', function() {
                 const filteredData = filterDataForStatus(orderData);
                 populateStatusTable(filteredData);
             });
-            
             // Apply filter untuk list order
             document.getElementById('apply-filter').addEventListener('click', function() {
                 const startDate = document.getElementById('start-date').value;
                 const endDate = document.getElementById('end-date').value;
                 const plant = document.getElementById('plant-filter').value;
                 const status = document.getElementById('status-filter').value;
-                
                 const filteredData = filterData(orderData, startDate, endDate, plant, status);
                 populateOrderTable(filteredData);
             });
-            
             // Apply filter untuk dashboard
             document.getElementById('dashboard-apply-filter').addEventListener('click', function() {
                 updateDashboardStats(orderData);
                 createCharts(orderData);
             });
-            
             // Toggle sidebar
             document.getElementById('sidebarToggleBtn').addEventListener('click', toggleSidebar);
             document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
-            
             // Modal handlers
             document.getElementById('closeModal').addEventListener('click', function() {
                 document.getElementById('editModal').style.display = 'none';
             });
-            
             document.getElementById('cancelEdit').addEventListener('click', function() {
                 document.getElementById('editModal').style.display = 'none';
             });
-            
             // Edit form handler
             document.getElementById('editForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
                 // Update data
                 if (currentEditingRow !== null) {
                     const newQtyOrder = parseFloat(document.getElementById('edit-qty-order').value);
                     const newQtyDelivery = parseFloat(document.getElementById('edit-qty-delivery').value);
                     const newQtyCancel = parseFloat(document.getElementById('edit-qty-cancel').value);
-                    
                     orderData[currentEditingRow].qtyOrder = newQtyOrder;
                     orderData[currentEditingRow].qtyDelivery = newQtyDelivery;
                     orderData[currentEditingRow].qtyCancel = newQtyCancel;
-                    orderData[currentEditingRow].qtyRemain = newQtyOrder - newQtyDelivery;
-                    
+                    // PERBAIKAN: Hitung ulang qtyRemain dan atur ke 0 jika status cancel
+                    if (orderData[currentEditingRow].status === '90 : Cancel') {
+                         orderData[currentEditingRow].qtyRemain = 0;
+                    } else {
+                         orderData[currentEditingRow].qtyRemain = newQtyOrder - newQtyDelivery;
+                    }
                     // Update status jika qty cancel > 0
                     if (newQtyCancel > 0) {
                         orderData[currentEditingRow].status = '90 : Cancel';
+                        // Jika status diubah menjadi cancel, qty remain harus 0
+                        orderData[currentEditingRow].qtyRemain = 0;
                     }
-                    
                     // Update UI
                     populateStatusTable(orderData);
                     populateOrderTable(orderData);
                     updateDashboardStats(orderData);
                     createCharts(orderData);
-                    
                     // Close modal
                     document.getElementById('editModal').style.display = 'none';
                     alert('Data berhasil diperbarui!');

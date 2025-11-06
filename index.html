@@ -452,7 +452,10 @@
             gap: 12px;
             font-size: 11px;
             flex-wrap: wrap;
-            justify-content: flex-end;
+            justify-content: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
         }
         
         .legend-item {
@@ -1112,12 +1115,12 @@
                                 <div class="chart-title" id="performOrderTitle">
                                     <i class="fas fa-chart-bar"></i> Perform Order
                                 </div>
-                                <div class="chart-legend" id="performOrderLegend">
-                                    <!-- Legend akan diisi oleh JavaScript -->
-                                </div>
                             </div>
                             <div class="chart-box">
                                 <canvas id="performOrderChart"></canvas>
+                            </div>
+                            <div class="chart-legend" id="performOrderLegend">
+                                <!-- Legend akan diisi oleh JavaScript -->
                             </div>
                         </div>
                         
@@ -1126,12 +1129,12 @@
                                 <div class="chart-title" id="performProjectTitle">
                                     <i class="fas fa-chart-pie"></i> Perform Project
                                 </div>
-                                <div class="chart-legend" id="performProjectLegend">
-                                    <!-- Legend akan diisi oleh JavaScript -->
-                                </div>
                             </div>
                             <div class="chart-box">
                                 <canvas id="performProjectChart"></canvas>
+                            </div>
+                            <div class="chart-legend" id="performProjectLegend">
+                                <!-- Legend akan diisi oleh JavaScript -->
                             </div>
                         </div>
                         
@@ -1140,12 +1143,12 @@
                                 <div class="chart-title" id="statusDistributionTitle">
                                     <i class="fas fa-chart-line"></i> Status Distribution
                                 </div>
-                                <div class="chart-legend" id="statusDistributionLegend">
-                                    <!-- Legend akan diisi oleh JavaScript -->
-                                </div>
                             </div>
                             <div class="chart-box">
                                 <canvas id="statusDistributionChart"></canvas>
+                            </div>
+                            <div class="chart-legend" id="statusDistributionLegend">
+                                <!-- Legend akan diisi oleh JavaScript -->
                             </div>
                         </div>
                         
@@ -1154,13 +1157,11 @@
                                 <div class="chart-title" id="qtyOrderPerDayTitle">
                                     <i class="fas fa-calendar-alt"></i> Qty Order Per Day
                                 </div>
-                                <div class="chart-legend" id="qtyOrderPerDayLegend">
-                                    <!-- Legend akan diisi oleh JavaScript -->
-                                </div>
                             </div>
                             <div class="wide-chart-box">
                                 <canvas id="qtyOrderPerDayChart"></canvas>
                             </div>
+                            <!-- PERBAIKAN: Hilangkan legend untuk Qty Order Per Day -->
                         </div>
                     </div>
                     
@@ -2115,14 +2116,8 @@
             // Chart 4: Qty Order Per Day (Line Chart)
             const qtyOrderPerDayCtx = document.getElementById('qtyOrderPerDayChart').getContext('2d');
             
-            // Update legend untuk Qty Order Per Day
-            const qtyOrderPerDayLegend = document.getElementById('qtyOrderPerDayLegend');
-            qtyOrderPerDayLegend.innerHTML = `
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(41, 128, 185, 1)"></div>
-                    <span>Order Qty Per Day</span>
-                </div>
-            `;
+            // PERBAIKAN: Hilangkan legend untuk Qty Order Per Day
+            // Tidak ada kode untuk menambahkan legend di sini
             
             currentCharts.qtyOrderPerDay = new Chart(qtyOrderPerDayCtx, {
                 type: 'line',

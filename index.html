@@ -745,12 +745,12 @@
                 <h3><i class="fas fa-filter"></i> Dashboard Filters</h3>
                 <div class="filter-group">
                     <label for="dashboard-start-date">Start Date (Delivery Date)</label>
-                    <input type="date" id="dashboard-start-date" value="2025-10-30">
+                    <input type="date" id="dashboard-start-date">
                     <div class="date-info">Filter berdasarkan Delivery Date</div>
                 </div>
                 <div class="filter-group">
                     <label for="dashboard-end-date">End Date (Delivery Date)</label>
-                    <input type="date" id="dashboard-end-date" value="2025-11-06">
+                    <input type="date" id="dashboard-end-date">
                     <div class="date-info">Filter berdasarkan Delivery Date</div>
                 </div>
                 <div class="filter-group">
@@ -820,11 +820,11 @@
                 <div class="compact-filter-row">
                     <div class="compact-filter-group">
                         <label for="status-start-date">Start Date</label>
-                        <input type="date" id="status-start-date" value="2025-10-30">
+                        <input type="date" id="status-start-date">
                     </div>
                     <div class="compact-filter-group">
                         <label for="status-end-date">End Date</label>
-                        <input type="date" id="status-end-date" value="2025-11-06">
+                        <input type="date" id="status-end-date">
                     </div>
                     <div class="compact-filter-group">
                         <label for="status-plant-filter">Plant</label>
@@ -877,11 +877,11 @@
                 <div class="compact-filter-row">
                     <div class="compact-filter-group">
                         <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date" value="2025-10-30">
+                        <input type="date" id="start-date">
                     </div>
                     <div class="compact-filter-group">
                         <label for="end-date">End Date</label>
-                        <input type="date" id="end-date" value="2025-11-06">
+                        <input type="date" id="end-date">
                     </div>
                     <div class="compact-filter-group">
                         <label for="plant-filter">Plant</label>
@@ -1195,8 +1195,62 @@
             populateStatusTable(orderData);
             populateOrderTable(orderData);
             updatePlantFilters(orderData);
+            updateDateFilters(orderData); // PERBAIKAN: Update filter tanggal berdasarkan data
             updateDashboardStats(orderData);
             createCharts(orderData);
+        }
+
+        // PERBAIKAN: Fungsi untuk update filter tanggal berdasarkan data yang diupload
+        function updateDateFilters(data) {
+            // Ambil semua tanggal unik dari data
+            const uniqueDates = [...new Set(data.map(item => item.tanggal))].filter(Boolean);
+            
+            if (uniqueDates.length === 0) {
+                return;
+            }
+            
+            // Konversi tanggal ke format Date untuk sorting
+            const dateObjects = uniqueDates.map(dateStr => parseDate(dateStr)).filter(date => date);
+            
+            // Sort tanggal dari yang terlama ke terbaru
+            dateObjects.sort((a, b) => a - b);
+            
+            // Konversi kembali ke format string untuk input date
+            const minDate = dateObjects[0];
+            const maxDate = dateObjects[dateObjects.length - 1];
+            
+            // Format ke YYYY-MM-DD untuk input date
+            const formatForInput = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+            
+            const minDateStr = formatForInput(minDate);
+            const maxDateStr = formatForInput(maxDate);
+            
+            // Update semua filter date
+            const dateInputs = [
+                'dashboard-start-date', 'dashboard-end-date',
+                'status-start-date', 'status-end-date',
+                'start-date', 'end-date'
+            ];
+            
+            dateInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                input.min = minDateStr;
+                input.max = maxDateStr;
+                
+                // Set default value untuk start date = min date, end date = max date
+                if (inputId.includes('start-date')) {
+                    input.value = minDateStr;
+                } else if (inputId.includes('end-date')) {
+                    input.value = maxDateStr;
+                }
+            });
+            
+            console.log('Date filters updated:', { minDateStr, maxDateStr });
         }
 
         // Fungsi untuk inisialisasi truck counts
@@ -1666,7 +1720,7 @@
                 remain: 'rgba(255, 205, 86, 0.8)',      // Kuning cerah
                 cancel: 'rgba(255, 87, 51, 0.8)',       // Merah oranye cerah
                 projectTotal: 'rgba(153, 102, 255, 0.8)', // Ungu cerah
-                normal: 'rgba(106, 176, 76, 0.8)',      // Hijau cerah
+                normal: 'rgba(54, 162, 235, 0.8)',      // PERBAIKAN: Biru cerah seperti KPI Target Volume
                 suddenly: 'rgba(237, 85, 101, 0.8)',    // Merah muda cerah
                 lineChart: 'rgba(41, 128, 185, 0.8)'    // Biru cerah untuk line chart
             };
@@ -1871,8 +1925,8 @@
                             brightColors.suddenly
                         ],
                         borderColor: [
-                            'rgba(106, 176, 76, 1)',
-                            'rgba(237, 85, 101, 1)'
+                            'rgba(54, 162, 235, 1)',  // PERBAIKAN: Biru untuk Normal
+                            'rgba(237, 85, 101, 1)'   // Merah untuk Suddenly
                         ],
                         borderWidth: 1
                     }]
@@ -1988,11 +2042,11 @@
                     datasets: [{
                         data: [normalCount, suddenlyCount],
                         backgroundColor: [
-                            'rgba(106, 176, 76, 0.8)',
-                            'rgba(237, 85, 101, 0.8)'
+                            'rgba(54, 162, 235, 0.8)',  // PERBAIKAN: Biru cerah untuk Normal
+                            'rgba(237, 85, 101, 0.8)'   // Merah muda untuk Suddenly
                         ],
                         borderColor: [
-                            'rgba(106, 176, 76, 1)',
+                            'rgba(54, 162, 235, 1)',
                             'rgba(237, 85, 101, 1)'
                         ],
                         borderWidth: 1
@@ -2073,15 +2127,10 @@
             const now = new Date();
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('currentDate').textContent = now.toLocaleDateString('id-ID', options);
-            // Set default dates sesuai permintaan
-            const startDate = new Date('2025-10-30');
-            const endDate = new Date('2025-11-06');
-            document.getElementById('start-date').valueAsDate = startDate;
-            document.getElementById('end-date').valueAsDate = endDate;
-            document.getElementById('dashboard-start-date').valueAsDate = startDate;
-            document.getElementById('dashboard-end-date').valueAsDate = endDate;
-            document.getElementById('status-start-date').valueAsDate = startDate;
-            document.getElementById('status-end-date').valueAsDate = endDate;
+            
+            // Hapus default dates yang sebelumnya hardcoded
+            // Biarkan filter date kosong sampai file diupload
+
             // File upload handler
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 const file = e.target.files[0];

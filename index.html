@@ -347,6 +347,10 @@
             text-overflow: ellipsis;
             font-weight: 500;
         }
+        /* PERBAIKAN: Warna khusus untuk Cancel KPI */
+        .stat-card.cancel-kpi {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
         /* Chart area dengan layout yang lebih estetik */
         .chart-grid {
             display: grid;
@@ -952,7 +956,8 @@
                             <div class="stat-value" id="total-remain">-</div>
                             <div class="stat-label">Remain Qty</div>
                         </div>
-                        <div class="stat-card">
+                        <!-- PERBAIKAN: Cancel KPI dengan warna merah -->
+                        <div class="stat-card cancel-kpi">
                             <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
                             <div class="stat-value" id="total-cancel">-</div>
                             <div class="stat-label">Cancel Qty</div>
@@ -1586,7 +1591,7 @@
             });
         }
 
-        // Fungsi untuk membuat chart dengan tampilan yang lebih estetik
+        // PERBAIKAN: Fungsi untuk membuat chart dengan warna yang lebih cerah dan smooth
         function createCharts(data) {
             // Hancurkan chart sebelumnya jika ada
             Object.values(currentCharts).forEach(chart => {
@@ -1653,29 +1658,41 @@
             } else {
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
+            // PERBAIKAN: Warna chart yang lebih cerah dan smooth
+            const brightColors = {
+                target: 'rgba(255, 99, 132, 0.8)',      // Pink cerah
+                order: 'rgba(54, 162, 235, 0.8)',       // Biru cerah
+                delivered: 'rgba(75, 192, 192, 0.8)',   // Hijau toska
+                remain: 'rgba(255, 205, 86, 0.8)',      // Kuning cerah
+                cancel: 'rgba(255, 87, 51, 0.8)',       // Merah oranye cerah
+                projectTotal: 'rgba(153, 102, 255, 0.8)', // Ungu cerah
+                normal: 'rgba(106, 176, 76, 0.8)',      // Hijau cerah
+                suddenly: 'rgba(237, 85, 101, 0.8)',    // Merah muda cerah
+                lineChart: 'rgba(41, 128, 185, 0.8)'    // Biru cerah untuk line chart
+            };
             // Chart 1: Perform Order (Bar Chart)
             const performOrderCtx = document.getElementById('performOrderChart').getContext('2d');
             // Update legend untuk Perform Order
             const performOrderLegend = document.getElementById('performOrderLegend');
             performOrderLegend.innerHTML = `
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(255, 99, 132, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.target}"></div>
                     <span>Target</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(54, 162, 235, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.order}"></div>
                     <span>Order</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(75, 192, 192, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.delivered}"></div>
                     <span>Delivered</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(255, 205, 86, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.remain}"></div>
                     <span>Remain</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(153, 102, 255, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.cancel}"></div>
                     <span>Cancel</span>
                 </div>
             `;
@@ -1687,18 +1704,18 @@
                         label: 'Volume (m³)',
                         data: [totalTargetVolume, totalOrderQty, totalDeliveryQty, totalRemainQty, totalCancelQty],
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.7)',    // Target - Merah
-                            'rgba(54, 162, 235, 0.7)',    // Order - Biru
-                            'rgba(75, 192, 192, 0.7)',    // Delivered - Hijau
-                            'rgba(255, 205, 86, 0.7)',    // Remain - Kuning
-                            'rgba(153, 102, 255, 0.7)'    // Cancel - Ungu
+                            brightColors.target,
+                            brightColors.order,
+                            brightColors.delivered,
+                            brightColors.remain,
+                            brightColors.cancel
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(255, 205, 86, 1)',
-                            'rgba(153, 102, 255, 1)'
+                            'rgba(255, 87, 51, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1750,19 +1767,19 @@
             const performProjectLegend = document.getElementById('performProjectLegend');
             performProjectLegend.innerHTML = `
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(54, 162, 235, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.projectTotal}"></div>
                     <span>Total</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(75, 192, 192, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.delivered}"></div>
                     <span>Delivered</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(255, 205, 86, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.remain}"></div>
                     <span>Remain</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(153, 102, 255, 0.7)"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.cancel}"></div>
                     <span>Cancel</span>
                 </div>
             `;
@@ -1774,16 +1791,16 @@
                         label: 'Jumlah Project',
                         data: [totalProject, totalProjectDelivered, totalProjectRemain, totalProjectCancel],
                         backgroundColor: [
-                            'rgba(54, 162, 235, 0.7)',    // Total Project - Biru
-                            'rgba(75, 192, 192, 0.7)',    // Project Delivered - Hijau
-                            'rgba(255, 205, 86, 0.7)',    // Project Remain - Kuning
-                            'rgba(153, 102, 255, 0.7)'    // Project Cancel - Ungu
+                            brightColors.projectTotal,
+                            brightColors.delivered,
+                            brightColors.remain,
+                            brightColors.cancel
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',
+                            'rgba(153, 102, 255, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(255, 205, 86, 1)',
-                            'rgba(153, 102, 255, 1)'
+                            'rgba(255, 87, 51, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1835,11 +1852,11 @@
             const statusDistributionLegend = document.getElementById('statusDistributionLegend');
             statusDistributionLegend.innerHTML = `
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #d4edda"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.normal}"></div>
                     <span>Normal</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f8d7da"></div>
+                    <div class="legend-color" style="background-color: ${brightColors.suddenly}"></div>
                     <span>Suddenly</span>
                 </div>
             `;
@@ -1850,12 +1867,12 @@
                     datasets: [{
                         data: [normalCount, suddenlyCount],
                         backgroundColor: [
-                            '#d4edda',
-                            '#f8d7da'
+                            brightColors.normal,
+                            brightColors.suddenly
                         ],
                         borderColor: [
-                            '#155724',
-                            '#721c24'
+                            'rgba(106, 176, 76, 1)',
+                            'rgba(237, 85, 101, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1888,8 +1905,6 @@
             });
             // Chart 4: Qty Order Per Day (Line Chart)
             const qtyOrderPerDayCtx = document.getElementById('qtyOrderPerDayChart').getContext('2d');
-            // Legend untuk Qty Order Per Day dihilangkan
-            // Tidak ada kode untuk menambahkan legend di sini
             currentCharts.qtyOrderPerDay = new Chart(qtyOrderPerDayCtx, {
                 type: 'line',
                 data: {
@@ -1898,11 +1913,11 @@
                         label: 'Order Qty Per Day',
                         data: orderQtyPerDay,
                         backgroundColor: 'rgba(41, 128, 185, 0.1)',
-                        borderColor: 'rgba(41, 128, 185, 1)',
+                        borderColor: brightColors.lineChart,
                         borderWidth: 3,
                         tension: 0.4,
                         fill: true,
-                        pointBackgroundColor: 'rgba(41, 128, 185, 1)',
+                        pointBackgroundColor: brightColors.lineChart,
                         pointBorderColor: '#fff',
                         pointBorderWidth: 2,
                         pointRadius: 5,
@@ -1973,12 +1988,12 @@
                     datasets: [{
                         data: [normalCount, suddenlyCount],
                         backgroundColor: [
-                            '#d4edda',
-                            '#f8d7da'
+                            'rgba(106, 176, 76, 0.8)',
+                            'rgba(237, 85, 101, 0.8)'
                         ],
                         borderColor: [
-                            '#155724',
-                            '#721c24'
+                            'rgba(106, 176, 76, 1)',
+                            'rgba(237, 85, 101, 1)'
                         ],
                         borderWidth: 1
                     }]

@@ -935,7 +935,7 @@
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
                             <div class="stat-value" id="total-target-volume">-</div>
-                            <div class="stat-label">Target Volume/Day</div> <!-- Diubah -->
+                            <div class="stat-label">Target Volume</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
@@ -952,10 +952,10 @@
                             <div class="stat-value" id="total-remain">-</div>
                             <div class="stat-label">Remain Qty</div>
                         </div>
-                        <div class="stat-card" style="background: var(--header-gradient);"> <!-- Diubah -->
+                        <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
-                            <div class="stat-value" id="total-cancel" style="color: white;">-</div> <!-- Diubah -->
-                            <div class="stat-label" style="color: white;">Cancel Qty</div> <!-- Diubah -->
+                            <div class="stat-value" id="total-cancel">-</div>
+                            <div class="stat-label">Cancel Qty</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
@@ -1100,18 +1100,6 @@
         let currentEditingField = null;
         let projectRemainData = []; // Variabel global untuk menyimpan data project remain
 
-        // --- TAMBAHAN: Daftar Plant Default ---
-        const DEFAULT_PLANTS = [
-            "Bali - Denpasar 2",
-            "Bali - Gianyar",
-            "Gempol",
-            "Kediri",
-            "Krian",
-            "Manukan",
-            "Manyar Gresik"
-        ];
-        // -------------------------------
-
         // Fungsi untuk memproses file Excel
         function processExcelFile(file) {
             const loadingIndicator = document.getElementById('loadingIndicator');
@@ -1195,11 +1183,9 @@
                     orderStatusType: orderStatusType // Normal/Suddenly
                 };
             }).filter(item => item.tanggal); // Hanya data dengan tanggal
-
             // Initialize truck counts dan target volumes
             initializeTruckCounts();
             initializeTargetVolumes();
-
             // Update UI dengan data baru
             populateStatusTable(orderData);
             populateOrderTable(orderData);
@@ -1210,47 +1196,21 @@
 
         // Fungsi untuk inisialisasi truck counts
         function initializeTruckCounts() {
-            // Reset truckCounts
+            const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
             truckCounts = {};
-
-            // Masukkan plant default dengan nilai 0
-            DEFAULT_PLANTS.forEach(plant => {
-                truckCounts[plant] = 0;
+            plants.forEach(plant => {
+                truckCounts[plant] = 0; // Default value
             });
-
-            // Ambil plant dari data Excel (jika ada)
-            const plantsFromData = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
-
-            // Tambahkan plant dari data Excel yang tidak ada di default
-            plantsFromData.forEach(plant => {
-                if (!DEFAULT_PLANTS.includes(plant)) {
-                    truckCounts[plant] = 0; // Nilai default
-                }
-            });
-
             updateTruckInputs();
         }
 
         // Fungsi untuk inisialisasi target volumes
         function initializeTargetVolumes() {
-            // Reset targetVolumes
+            const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
             targetVolumes = {};
-
-            // Masukkan plant default dengan nilai 0
-            DEFAULT_PLANTS.forEach(plant => {
-                targetVolumes[plant] = 0;
+            plants.forEach(plant => {
+                targetVolumes[plant] = 0; // Default value
             });
-
-            // Ambil plant dari data Excel (jika ada)
-            const plantsFromData = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
-
-            // Tambahkan plant dari data Excel yang tidak ada di default
-            plantsFromData.forEach(plant => {
-                if (!DEFAULT_PLANTS.includes(plant)) {
-                    targetVolumes[plant] = 0; // Nilai default
-                }
-            });
-
             updateTargetVolumeInputs();
         }
 
@@ -1258,15 +1218,7 @@
         function updateTruckInputs() {
             const container = document.getElementById('truck-inputs-container');
             container.innerHTML = '';
-            const plants = Object.keys(truckCounts).sort((a, b) => {
-                // Urutkan default plant terlebih dahulu, lalu sisanya
-                const aIsDefault = DEFAULT_PLANTS.includes(a);
-                const bIsDefault = DEFAULT_PLANTS.includes(b);
-                if (aIsDefault && bIsDefault) return a.localeCompare(b);
-                if (aIsDefault) return -1;
-                if (bIsDefault) return 1;
-                return a.localeCompare(b);
-            });
+            const plants = Object.keys(truckCounts).sort();
             if (plants.length === 0) {
                 container.innerHTML = '<p class="file-info">Upload file Excel untuk mengisi data plant</p>';
                 return;
@@ -1276,10 +1228,10 @@
                 row.className = 'truck-input-row';
                 row.innerHTML = `
                     <span class="truck-plant-name">${plant}</span>
-                    <input type="number"
-                           class="truck-input"
-                           value="${truckCounts[plant]}"
-                           min="0"
+                    <input type="number" 
+                           class="truck-input" 
+                           value="${truckCounts[plant]}" 
+                           min="0" 
                            data-plant="${plant}"
                            onchange="updateTruckCount('${plant}', this.value)">
                 `;
@@ -1291,15 +1243,7 @@
         function updateTargetVolumeInputs() {
             const container = document.getElementById('target-volume-inputs-container');
             container.innerHTML = '';
-            const plants = Object.keys(targetVolumes).sort((a, b) => {
-                // Urutkan default plant terlebih dahulu, lalu sisanya
-                const aIsDefault = DEFAULT_PLANTS.includes(a);
-                const bIsDefault = DEFAULT_PLANTS.includes(b);
-                if (aIsDefault && bIsDefault) return a.localeCompare(b);
-                if (aIsDefault) return -1;
-                if (bIsDefault) return 1;
-                return a.localeCompare(b);
-            });
+            const plants = Object.keys(targetVolumes).sort();
             if (plants.length === 0) {
                 container.innerHTML = '<p class="file-info">Upload file Excel untuk mengisi data plant</p>';
                 return;
@@ -1309,10 +1253,10 @@
                 row.className = 'truck-input-row';
                 row.innerHTML = `
                     <span class="truck-plant-name">${plant}</span>
-                    <input type="number"
-                           class="truck-input"
-                           value="${targetVolumes[plant]}"
-                           min="0"
+                    <input type="number" 
+                           class="truck-input" 
+                           value="${targetVolumes[plant]}" 
+                           min="0" 
                            step="0.1"
                            data-plant="${plant}"
                            onchange="updateTargetVolume('${plant}', this.value)">
@@ -1325,49 +1269,12 @@
         function updateTruckCount(plant, value) {
             truckCounts[plant] = parseInt(value) || 0;
             updateDashboardStats(orderData);
-            savePlantConfig(); // Simpan ke localStorage
         }
 
         // Fungsi untuk update target volume
         function updateTargetVolume(plant, value) {
             targetVolumes[plant] = parseFloat(value) || 0;
             updateDashboardStats(orderData);
-            savePlantConfig(); // Simpan ke localStorage
-        }
-
-        // Fungsi untuk menyimpan konfigurasi plant ke localStorage
-        function savePlantConfig() {
-            const config = {
-                truckCounts: truckCounts,
-                targetVolumes: targetVolumes
-            };
-            localStorage.setItem('plantConfig', JSON.stringify(config));
-        }
-
-        // Fungsi untuk memuat konfigurasi plant dari localStorage
-        function loadPlantConfig() {
-            const savedConfig = localStorage.getItem('plantConfig');
-            if (savedConfig) {
-                try {
-                    const config = JSON.parse(savedConfig);
-                    // Hanya muat jika data valid
-                    if (config.truckCounts && config.targetVolumes) {
-                        // Gabungkan dengan plant default
-                        DEFAULT_PLANTS.forEach(plant => {
-                            if (!(plant in config.truckCounts)) {
-                                config.truckCounts[plant] = 0;
-                            }
-                            if (!(plant in config.targetVolumes)) {
-                                config.targetVolumes[plant] = 0;
-                            }
-                        });
-                        truckCounts = config.truckCounts;
-                        targetVolumes = config.targetVolumes;
-                    }
-                } catch (e) {
-                    console.error('Error loading plant config:', e);
-                }
-            }
         }
 
         // Fungsi untuk memformat tanggal dari Excel
@@ -1587,17 +1494,21 @@
         function updateDashboardStats(data) {
             // Filter data berdasarkan dashboard filter
             const filteredData = filterDataForDashboard(data);
+
             // PERBAIKAN: Hitung Plant Remain berdasarkan project remain yang ditampilkan
             // Pertama, update project remain details untuk mendapatkan data yang benar
             updateProjectRemainDetails(filteredData);
+            
             // PERBAIKAN: Hitung Plant Remain berdasarkan data project remain yang sudah difilter
             const plantRemainCount = new Set(projectRemainData.map(item => item.plant)).size;
+
             // Hitung statistik lainnya...
             const totalOrderQty = filteredData.reduce((sum, item) => sum + item.qtyOrder, 0);
             const totalDelivery = filteredData.reduce((sum, item) => sum + item.qtyDelivery, 0);
             // qtyRemain sekarang sudah benar berdasarkan logika di processData
             const totalRemain = filteredData.reduce((sum, item) => sum + item.qtyRemain, 0);
             const totalCancel = filteredData.reduce((sum, item) => sum + item.qtyCancel, 0);
+
             // Hitung total project (unique siteNo per tanggal)
             const projectSet = new Set();
             const projectDeliveredSet = new Set();
@@ -1621,6 +1532,7 @@
             const totalProjectDelivered = projectDeliveredSet.size;
             const totalProjectRemain = projectRemainSet.size;
             const totalProjectCancel = projectCancelSet.size;
+
             // Total truck mixer - terkoneksi dengan filter plant
             const selectedPlant = document.getElementById('dashboard-plant-filter').value;
             let totalTruckCount = 0;
@@ -1632,6 +1544,7 @@
                 totalTruckCount = Object.values(truckCounts).reduce((sum, count) => sum + count, 0);
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
+
             // Update UI
             document.getElementById('plant-remain-count').textContent = plantRemainCount; // Update Plant Remain KPI
             document.getElementById('total-order-qty').textContent = totalOrderQty.toFixed(1);
@@ -1762,7 +1675,7 @@
                     <span>Remain</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(139, 0, 0, 0.7)"></div> <!-- Diubah -->
+                    <div class="legend-color" style="background-color: rgba(153, 102, 255, 0.7)"></div>
                     <span>Cancel</span>
                 </div>
             `;
@@ -1778,14 +1691,14 @@
                             'rgba(54, 162, 235, 0.7)',    // Order - Biru
                             'rgba(75, 192, 192, 0.7)',    // Delivered - Hijau
                             'rgba(255, 205, 86, 0.7)',    // Remain - Kuning
-                            'rgba(139, 0, 0, 0.7)'        // Cancel - Bloodmoon (Dark Red) - Diubah
+                            'rgba(153, 102, 255, 0.7)'    // Cancel - Ungu
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(255, 205, 86, 1)',
-                            'rgba(139, 0, 0, 1)'          // Border Cancel - Bloodmoon (Dark Red) - Diubah
+                            'rgba(153, 102, 255, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -1849,7 +1762,7 @@
                     <span>Remain</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: rgba(139, 0, 0, 0.7)"></div> <!-- Diubah -->
+                    <div class="legend-color" style="background-color: rgba(153, 102, 255, 0.7)"></div>
                     <span>Cancel</span>
                 </div>
             `;
@@ -1864,13 +1777,13 @@
                             'rgba(54, 162, 235, 0.7)',    // Total Project - Biru
                             'rgba(75, 192, 192, 0.7)',    // Project Delivered - Hijau
                             'rgba(255, 205, 86, 0.7)',    // Project Remain - Kuning
-                            'rgba(139, 0, 0, 0.7)'        // Project Cancel - Bloodmoon (Dark Red) - Diubah
+                            'rgba(153, 102, 255, 0.7)'    // Project Cancel - Ungu
                         ],
                         borderColor: [
                             'rgba(54, 162, 235, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(255, 205, 86, 1)',
-                            'rgba(139, 0, 0, 1)'          // Border Project Cancel - Bloodmoon (Dark Red) - Diubah
+                            'rgba(153, 102, 255, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -2141,10 +2054,6 @@
 
         // Inisialisasi aplikasi
         document.addEventListener('DOMContentLoaded', function() {
-            // --- TAMBAHAN: Muat konfigurasi plant saat aplikasi dimulai ---
-            loadPlantConfig();
-            // -------------------------------
-
             // Set current date
             const now = new Date();
             const options = { day: 'numeric', month: 'long', year: 'numeric' };

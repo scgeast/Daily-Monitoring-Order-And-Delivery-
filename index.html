@@ -248,6 +248,17 @@
             background-color: var(--primary);
             color: white;
             font-weight: 600;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+        th.sortable:hover {
+            background-color: #3a506b;
+        }
+        th i {
+            margin-left: 5px;
+            font-size: 12px;
+            opacity: 0.7;
         }
         tr:hover {
             background-color: #f9f9f9;
@@ -1048,13 +1059,13 @@
                         <table id="project-remain-table">
                             <thead>
                                 <tr>
-                                    <th>Delivery Date</th>
-                                    <th>Site No</th>
-                                    <th>Site Name</th>
-                                    <th>Plant</th>
-                                    <th>Qty Order</th>
-                                    <th>Qty Delivered</th>
-                                    <th>Qty Remain</th>
+                                    <th class="sortable" data-column="deliveryDate">Delivery Date <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="siteNo">Site No <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="siteName">Site Name <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="plant">Plant <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="qtyOrder">Qty Order <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="qtyDelivered">Qty Delivered <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-column="qtyRemain">Qty Remain <i class="fas fa-sort"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1072,7 +1083,7 @@
     <div class="modal" id="editModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Edit Quantity</h3>
+                <h3 class="modal-title">Edit Quantity & Remarks</h3>
                 <button class="close-btn" id="closeModal">&times;</button>
             </div>
             <form id="editForm">
@@ -1087,6 +1098,10 @@
                 <div class="form-group">
                     <label for="edit-qty-cancel">Qty Cancel</label>
                     <input type="number" id="edit-qty-cancel" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-remarks">Remarks</label>
+                    <textarea id="edit-remarks" placeholder="Tambahkan catatan..."></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" id="cancelEdit">Cancel</button>
@@ -1104,6 +1119,7 @@
         let currentEditingRow = null;
         let currentEditingField = null;
         let projectRemainData = []; // Variabel global untuk menyimpan data project remain
+        let sortDirection = {}; // Untuk menyimpan arah sorting per kolom
 
         // Fungsi untuk memproses file Excel
         function processExcelFile(file) {
@@ -1460,6 +1476,7 @@
             document.getElementById('edit-qty-order').value = item.qtyOrder;
             document.getElementById('edit-qty-delivery').value = item.qtyDelivery;
             document.getElementById('edit-qty-cancel').value = item.qtyCancel;
+            document.getElementById('edit-remarks').value = item.remarks;
             // Show modal
             document.getElementById('editModal').style.display = 'flex';
         }
@@ -1642,6 +1659,126 @@
                     <td>${item.qtyRemain}</td>
                 `;
                 tableBody.appendChild(row);
+            });
+            
+            // Add sorting functionality to table headers
+            addSortingToProjectRemainTable();
+        }
+
+        // Fungsi untuk menambahkan sorting ke tabel project remain
+        function addSortingToProjectRemainTable() {
+            const headers = document.querySelectorAll('#project-remain-table th.sortable');
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const column = this.getAttribute('data-column');
+                    sortProjectRemainTable(column);
+                });
+            });
+        }
+
+        // Fungsi untuk sorting tabel project remain
+        function sortProjectRemainTable(column) {
+            // Toggle sort direction
+            if (!sortDirection[column]) {
+                sortDirection[column] = 'asc';
+            } else {
+                sortDirection[column] = sortDirection[column] === 'asc' ? 'desc' : 'asc';
+            }
+            
+            // Sort data
+            projectRemainData.sort((a, b) => {
+                let aValue, bValue;
+                
+                // Handle different column types
+                switch(column) {
+                    case 'deliveryDate':
+                        aValue = parseDate(a.tanggal);
+                        bValue = parseDate(b.tanggal);
+                        break;
+                    case 'siteNo':
+                        aValue = a.siteNo;
+                        bValue = b.siteNo;
+                        break;
+                    case 'siteName':
+                        aValue = a.siteName;
+                        bValue = b.siteName;
+                        break;
+                    case 'plant':
+                        aValue = a.plant;
+                        bValue = b.plant;
+                        break;
+                    case 'qtyOrder':
+                        aValue = a.qtyOrder;
+                        bValue = b.qtyOrder;
+                        break;
+                    case 'qtyDelivered':
+                        aValue = a.qtyDelivery;
+                        bValue = b.qtyDelivery;
+                        break;
+                    case 'qtyRemain':
+                        aValue = a.qtyRemain;
+                        bValue = b.qtyRemain;
+                        break;
+                    default:
+                        aValue = a[column];
+                        bValue = b[column];
+                }
+                
+                // Handle date comparison
+                if (aValue instanceof Date && bValue instanceof Date) {
+                    return sortDirection[column] === 'asc' ? aValue - bValue : bValue - aValue;
+                }
+                
+                // Handle numeric comparison
+                if (typeof aValue === 'number' && typeof bValue === 'number') {
+                    return sortDirection[column] === 'asc' ? aValue - bValue : bValue - aValue;
+                }
+                
+                // Handle string comparison
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                    return sortDirection[column] === 'asc' 
+                        ? aValue.localeCompare(bValue) 
+                        : bValue.localeCompare(aValue);
+                }
+                
+                return 0;
+            });
+            
+            // Update table with sorted data
+            const tableBody = document.querySelector('#project-remain-table tbody');
+            tableBody.innerHTML = '';
+            
+            projectRemainData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.tanggal}</td>
+                    <td>${item.siteNo}</td>
+                    <td title="${item.siteName}">${item.siteName.length > 50 ? item.siteName.substring(0, 50) + '...' : item.siteName}</td>
+                    <td>${item.plant}</td>
+                    <td>${item.qtyOrder}</td>
+                    <td>${item.qtyDelivery}</td>
+                    <td>${item.qtyRemain}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Update sort icons
+            updateSortIcons(column);
+        }
+
+        // Fungsi untuk update sort icons
+        function updateSortIcons(currentColumn) {
+            const headers = document.querySelectorAll('#project-remain-table th.sortable');
+            headers.forEach(header => {
+                const column = header.getAttribute('data-column');
+                const icon = header.querySelector('i');
+                if (column === currentColumn) {
+                    icon.className = sortDirection[column] === 'asc' 
+                        ? 'fas fa-sort-up' 
+                        : 'fas fa-sort-down';
+                } else {
+                    icon.className = 'fas fa-sort';
+                }
             });
         }
 
@@ -2113,6 +2250,21 @@
             });
         }
 
+        // Fungsi untuk menentukan status berdasarkan kuantitas
+        function determineStatus(qtyOrder, qtyDelivery, qtyCancel) {
+            if (qtyOrder === qtyCancel) {
+                return '90 : Cancel';
+            } else if (qtyOrder === qtyDelivery) {
+                return 'E : Finished Pouring';
+            } else if (qtyDelivery < qtyOrder && qtyDelivery > 0) {
+                return 'A : Confirmed';
+            } else if (qtyOrder === (qtyOrder - qtyDelivery)) {
+                return 'I : Pending Confirmation';
+            } else {
+                return 'I : Pending Confirmation'; // Default status
+            }
+        }
+
         // Fungsi untuk toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -2196,21 +2348,19 @@
                     const newQtyOrder = parseFloat(document.getElementById('edit-qty-order').value);
                     const newQtyDelivery = parseFloat(document.getElementById('edit-qty-delivery').value);
                     const newQtyCancel = parseFloat(document.getElementById('edit-qty-cancel').value);
+                    const newRemarks = document.getElementById('edit-remarks').value;
+                    
                     orderData[currentEditingRow].qtyOrder = newQtyOrder;
                     orderData[currentEditingRow].qtyDelivery = newQtyDelivery;
                     orderData[currentEditingRow].qtyCancel = newQtyCancel;
-                    // PERBAIKAN: Hitung ulang qtyRemain dan atur ke 0 jika status cancel
-                    if (orderData[currentEditingRow].status === '90 : Cancel') {
-                         orderData[currentEditingRow].qtyRemain = 0;
-                    } else {
-                         orderData[currentEditingRow].qtyRemain = newQtyOrder - newQtyDelivery;
-                    }
-                    // Update status jika qty cancel > 0
-                    if (newQtyCancel > 0) {
-                        orderData[currentEditingRow].status = '90 : Cancel';
-                        // Jika status diubah menjadi cancel, qty remain harus 0
-                        orderData[currentEditingRow].qtyRemain = 0;
-                    }
+                    orderData[currentEditingRow].remarks = newRemarks;
+                    
+                    // PERBAIKAN: Hitung ulang qtyRemain
+                    orderData[currentEditingRow].qtyRemain = newQtyOrder - newQtyDelivery;
+                    
+                    // PERBAIKAN: Tentukan status berdasarkan kuantitas
+                    orderData[currentEditingRow].status = determineStatus(newQtyOrder, newQtyDelivery, newQtyCancel);
+                    
                     // Update UI
                     populateStatusTable(orderData);
                     populateOrderTable(orderData);

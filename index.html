@@ -1782,7 +1782,7 @@
             });
         }
 
-        // PERBAIKAN: Fungsi untuk membuat chart dengan warna yang lebih cerah dan smooth
+        // PERBAIKAN: Fungsi untuk membuat chart dengan label hanya pada legend
         function createCharts(data) {
             // Hancurkan chart sebelumnya jika ada
             Object.values(currentCharts).forEach(chart => {
@@ -2037,20 +2037,27 @@
                     }
                 }
             });
-            // Chart 3: Status Distribution (Doughnut Chart)
+            // Chart 3: Status Distribution (Doughnut Chart) - LABEL HANYA PADA LEGEND
             const statusDistributionCtx = document.getElementById('statusDistributionChart').getContext('2d');
+            
+            // Hitung persentase
+            const totalStatus = normalCount + suddenlyCount;
+            const normalPercentage = totalStatus > 0 ? Math.round((normalCount / totalStatus) * 100) : 0;
+            const suddenlyPercentage = totalStatus > 0 ? Math.round((suddenlyCount / totalStatus) * 100) : 0;
+            
             // Update legend untuk Status Distribution
             const statusDistributionLegend = document.getElementById('statusDistributionLegend');
             statusDistributionLegend.innerHTML = `
                 <div class="legend-item">
                     <div class="legend-color" style="background-color: ${brightColors.normal}"></div>
-                    <span>Normal</span>
+                    <span>Normal: ${normalCount} (${normalPercentage}%)</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background-color: ${brightColors.suddenly}"></div>
-                    <span>Suddenly</span>
+                    <span>Suddenly: ${suddenlyCount} (${suddenlyPercentage}%)</span>
                 </div>
             `;
+            
             currentCharts.statusDistribution = new Chart(statusDistributionCtx, {
                 type: 'doughnut',
                 data: {
@@ -2062,10 +2069,10 @@
                             brightColors.suddenly
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',  // PERBAIKAN: Biru untuk Normal
-                            'rgba(237, 85, 101, 1)'   // Merah untuk Suddenly
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(237, 85, 101, 1)'
                         ],
-                        borderWidth: 1
+                        borderWidth: 2
                     }]
                 },
                 options: {
@@ -2073,16 +2080,16 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false
+                            display: false // MATIKAN DEFAULT LEGEND
                         },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    const label = context.label || '';
+                                    const label = context.label;
                                     const value = context.parsed;
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ${value} (${percentage}%)`;
+                                    return `${label}: ${value} order (${percentage}%)`;
                                 }
                             }
                         }

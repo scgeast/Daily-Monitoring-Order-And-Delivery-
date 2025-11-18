@@ -723,6 +723,34 @@
             border-radius: 4px;
             font-size: 13px;
         }
+        /* MODIFIKASI UNTUK WRAP TEXT DAN AUTO WIDTH PROJECT REMAIN TABLE */
+        #project-remain-table {
+            table-layout: auto; /* Ubah ke auto agar lebar kolom menyesuaikan isi */
+        }
+        #project-remain-table th,
+        #project-remain-table td {
+            /* Hilangkan lebar tetap, biarkan browser menghitung otomatis */
+            /* Hanya gunakan wrap text */
+            white-space: normal; /* Izinkan wrap */
+            word-wrap: break-word; /* Potong kata jika terlalu panjang */
+            vertical-align: top; /* Sejajarkan teks ke atas agar baris bisa merenggang */
+        }
+        /* Jika ingin memberi prioritas lebar tertentu pada beberapa kolom, Anda bisa tambahkan aturan ini */
+        /* Misalnya, untuk membuat Site Name lebih lebar, dan kolom Qty lebih sempit */
+        #project-remain-table th:nth-child(3), /* Site Name */
+        #project-remain-table td:nth-child(3) {
+            min-width: 150px; /* Minimum lebar untuk Site Name */
+            /* max-width: 300px; */ /* Opsional: batas maksimum lebar */
+        }
+        #project-remain-table th:nth-child(5), /* Qty Order */
+        #project-remain-table td:nth-child(5),
+        #project-remain-table th:nth-child(6), /* Qty Delivered */
+        #project-remain-table td:nth-child(6),
+        #project-remain-table th:nth-child(7), /* Qty Remain */
+        #project-remain-table td:nth-child(7) {
+            min-width: 60px; /* Minimum lebar untuk kolom Qty, lebih sempit */
+            text-align: right; /* Rata kanan untuk angka */
+        }
     </style>
 </head>
 <body>
@@ -1120,7 +1148,6 @@
         let currentEditingField = null;
         let projectRemainData = []; // Variabel global untuk menyimpan data project remain
         let sortDirection = {}; // Untuk menyimpan arah sorting per kolom
-
         // Fungsi untuk memproses file Excel
         function processExcelFile(file) {
             const loadingIndicator = document.getElementById('loadingIndicator');
@@ -1150,7 +1177,6 @@
             };
             reader.readAsArrayBuffer(file);
         }
-
         // Fungsi untuk memproses data dari Excel
         function processData(data) {
             // Skip header row
@@ -1161,11 +1187,11 @@
                 const createDate = row[20]; // Create Date (kolom 20)
                 let formattedDeliveryDate = '';
                 let formattedCreateDate = '';
-                // Format Delivery Date
+                // Format tanggal dari Delivery Date (kolom F/6)
                 if (deliveryDate) {
                     formattedDeliveryDate = formatDateFromExcel(deliveryDate);
                 }
-                // Format Create Date
+                // Format Create Date (kolom 20)
                 if (createDate) {
                     formattedCreateDate = formatDateFromExcel(createDate);
                 }
@@ -1215,26 +1241,20 @@
             updateDashboardStats(orderData);
             createCharts(orderData);
         }
-
         // PERBAIKAN: Fungsi untuk update filter tanggal berdasarkan data yang diupload
         function updateDateFilters(data) {
             // Ambil semua tanggal unik dari data
             const uniqueDates = [...new Set(data.map(item => item.tanggal))].filter(Boolean);
-            
             if (uniqueDates.length === 0) {
                 return;
             }
-            
             // Konversi tanggal ke format Date untuk sorting
             const dateObjects = uniqueDates.map(dateStr => parseDate(dateStr)).filter(date => date);
-            
             // Sort tanggal dari yang terlama ke terbaru
             dateObjects.sort((a, b) => a - b);
-            
             // Konversi kembali ke format string untuk input date
             const minDate = dateObjects[0];
             const maxDate = dateObjects[dateObjects.length - 1];
-            
             // Format ke YYYY-MM-DD untuk input date
             const formatForInput = (date) => {
                 const year = date.getFullYear();
@@ -1242,22 +1262,18 @@
                 const day = String(date.getDate()).padStart(2, '0');
                 return `${year}-${month}-${day}`;
             };
-            
             const minDateStr = formatForInput(minDate);
             const maxDateStr = formatForInput(maxDate);
-            
             // Update semua filter date
             const dateInputs = [
                 'dashboard-start-date', 'dashboard-end-date',
                 'status-start-date', 'status-end-date',
                 'start-date', 'end-date'
             ];
-            
             dateInputs.forEach(inputId => {
                 const input = document.getElementById(inputId);
                 input.min = minDateStr;
                 input.max = maxDateStr;
-                
                 // Set default value untuk start date = min date, end date = max date
                 if (inputId.includes('start-date')) {
                     input.value = minDateStr;
@@ -1265,10 +1281,8 @@
                     input.value = maxDateStr;
                 }
             });
-            
             console.log('Date filters updated:', { minDateStr, maxDateStr });
         }
-
         // Fungsi untuk inisialisasi truck counts
         function initializeTruckCounts() {
             const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
@@ -1278,7 +1292,6 @@
             });
             updateTruckInputs();
         }
-
         // Fungsi untuk inisialisasi target volumes
         function initializeTargetVolumes() {
             const plants = [...new Set(orderData.map(item => item.plant))].filter(Boolean);
@@ -1288,7 +1301,6 @@
             });
             updateTargetVolumeInputs();
         }
-
         // Fungsi untuk update truck inputs
         function updateTruckInputs() {
             const container = document.getElementById('truck-inputs-container');
@@ -1313,7 +1325,6 @@
                 container.appendChild(row);
             });
         }
-
         // Fungsi untuk update target volume inputs
         function updateTargetVolumeInputs() {
             const container = document.getElementById('target-volume-inputs-container');
@@ -1339,19 +1350,16 @@
                 container.appendChild(row);
             });
         }
-
         // Fungsi untuk update truck count
         function updateTruckCount(plant, value) {
             truckCounts[plant] = parseInt(value) || 0;
             updateDashboardStats(orderData);
         }
-
         // Fungsi untuk update target volume
         function updateTargetVolume(plant, value) {
             targetVolumes[plant] = parseFloat(value) || 0;
             updateDashboardStats(orderData);
         }
-
         // Fungsi untuk memformat tanggal dari Excel
         function formatDateFromExcel(dateValue) {
             if (!dateValue) return '';
@@ -1374,7 +1382,6 @@
             }
             return '';
         }
-
         // Fungsi untuk memformat tanggal
         function formatDate(date) {
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -1384,7 +1391,6 @@
             const year = date.getFullYear();
             return `${day} ${month} ${year}`;
         }
-
         // Fungsi untuk parsing tanggal dari format "06 Nov 2025"
         function parseDate(dateStr) {
             if (!dateStr) return null;
@@ -1397,7 +1403,6 @@
             if (month === -1 || isNaN(day) || isNaN(year)) return null;
             return new Date(year, month, day);
         }
-
         // Fungsi untuk mengisi tabel status order
         function populateStatusTable(data) {
             const tableBody = document.querySelector('#status-table tbody');
@@ -1467,7 +1472,6 @@
             // Update chart status order
             updateStatusOrderChart(data);
         }
-
         // Fungsi untuk membuka modal edit
         function openEditModal(item, index, field) {
             currentEditingRow = index;
@@ -1480,7 +1484,6 @@
             // Show modal
             document.getElementById('editModal').style.display = 'flex';
         }
-
         // Fungsi untuk mengisi tabel order
         function populateOrderTable(data) {
             const tableBody = document.querySelector('#order-table tbody');
@@ -1542,7 +1545,6 @@
                 });
             });
         }
-
         // Fungsi untuk update filter plant
         function updatePlantFilters(data) {
             const plants = [...new Set(data.map(item => item.plant))].filter(Boolean);
@@ -1565,26 +1567,21 @@
                 });
             });
         }
-
         // PERBAIKAN: Fungsi untuk update dashboard statistics
         function updateDashboardStats(data) {
             // Filter data berdasarkan dashboard filter
             const filteredData = filterDataForDashboard(data);
-
             // PERBAIKAN: Hitung Plant Remain berdasarkan project remain yang ditampilkan
             // Pertama, update project remain details untuk mendapatkan data yang benar
             updateProjectRemainDetails(filteredData);
-            
             // PERBAIKAN: Hitung Plant Remain berdasarkan data project remain yang sudah difilter
             const plantRemainCount = new Set(projectRemainData.map(item => item.plant)).size;
-
             // Hitung statistik lainnya...
             const totalOrderQty = filteredData.reduce((sum, item) => sum + item.qtyOrder, 0);
             const totalDelivery = filteredData.reduce((sum, item) => sum + item.qtyDelivery, 0);
             // qtyRemain sekarang sudah benar berdasarkan logika di processData
             const totalRemain = filteredData.reduce((sum, item) => sum + item.qtyRemain, 0);
             const totalCancel = filteredData.reduce((sum, item) => sum + item.qtyCancel, 0);
-
             // Hitung total project (unique siteNo per tanggal)
             const projectSet = new Set();
             const projectDeliveredSet = new Set();
@@ -1608,7 +1605,6 @@
             const totalProjectDelivered = projectDeliveredSet.size;
             const totalProjectRemain = projectRemainSet.size;
             const totalProjectCancel = projectCancelSet.size;
-
             // Total truck mixer - terkoneksi dengan filter plant
             const selectedPlant = document.getElementById('dashboard-plant-filter').value;
             let totalTruckCount = 0;
@@ -1620,7 +1616,6 @@
                 totalTruckCount = Object.values(truckCounts).reduce((sum, count) => sum + count, 0);
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
-
             // Update UI
             document.getElementById('plant-remain-count').textContent = plantRemainCount; // Update Plant Remain KPI
             document.getElementById('total-order-qty').textContent = totalOrderQty.toFixed(1);
@@ -1634,7 +1629,6 @@
             document.getElementById('total-truck-count').textContent = totalTruckCount;
             document.getElementById('total-target-volume').textContent = totalTargetVolume.toFixed(1);
         }
-
         // PERBAIKAN: Fungsi untuk update project remain details
         function updateProjectRemainDetails(data) {
             const tableBody = document.querySelector('#project-remain-table tbody');
@@ -1652,7 +1646,7 @@
                 row.innerHTML = `
                     <td>${item.tanggal}</td>
                     <td>${item.siteNo}</td>
-                    <td title="${item.siteName}">${item.siteName.length > 50 ? item.siteName.substring(0, 50) + '...' : item.siteName}</td>
+                    <td title="${item.siteName}">${item.siteName}</td> <!-- Removed substring logic for full display -->
                     <td>${item.plant}</td>
                     <td>${item.qtyOrder}</td>
                     <td>${item.qtyDelivery}</td>
@@ -1660,11 +1654,9 @@
                 `;
                 tableBody.appendChild(row);
             });
-            
             // Add sorting functionality to table headers
             addSortingToProjectRemainTable();
         }
-
         // Fungsi untuk menambahkan sorting ke tabel project remain
         function addSortingToProjectRemainTable() {
             const headers = document.querySelectorAll('#project-remain-table th.sortable');
@@ -1675,7 +1667,6 @@
                 });
             });
         }
-
         // Fungsi untuk sorting tabel project remain
         function sortProjectRemainTable(column) {
             // Toggle sort direction
@@ -1684,11 +1675,9 @@
             } else {
                 sortDirection[column] = sortDirection[column] === 'asc' ? 'desc' : 'asc';
             }
-            
             // Sort data
             projectRemainData.sort((a, b) => {
                 let aValue, bValue;
-                
                 // Handle different column types
                 switch(column) {
                     case 'deliveryDate':
@@ -1723,37 +1712,31 @@
                         aValue = a[column];
                         bValue = b[column];
                 }
-                
                 // Handle date comparison
                 if (aValue instanceof Date && bValue instanceof Date) {
                     return sortDirection[column] === 'asc' ? aValue - bValue : bValue - aValue;
                 }
-                
                 // Handle numeric comparison
                 if (typeof aValue === 'number' && typeof bValue === 'number') {
                     return sortDirection[column] === 'asc' ? aValue - bValue : bValue - aValue;
                 }
-                
                 // Handle string comparison
                 if (typeof aValue === 'string' && typeof bValue === 'string') {
                     return sortDirection[column] === 'asc' 
                         ? aValue.localeCompare(bValue) 
                         : bValue.localeCompare(aValue);
                 }
-                
                 return 0;
             });
-            
             // Update table with sorted data
             const tableBody = document.querySelector('#project-remain-table tbody');
             tableBody.innerHTML = '';
-            
             projectRemainData.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${item.tanggal}</td>
                     <td>${item.siteNo}</td>
-                    <td title="${item.siteName}">${item.siteName.length > 50 ? item.siteName.substring(0, 50) + '...' : item.siteName}</td>
+                    <td title="${item.siteName}">${item.siteName}</td> <!-- Removed substring logic for full display -->
                     <td>${item.plant}</td>
                     <td>${item.qtyOrder}</td>
                     <td>${item.qtyDelivery}</td>
@@ -1761,11 +1744,9 @@
                 `;
                 tableBody.appendChild(row);
             });
-            
             // Update sort icons
             updateSortIcons(column);
         }
-
         // Fungsi untuk update sort icons
         function updateSortIcons(currentColumn) {
             const headers = document.querySelectorAll('#project-remain-table th.sortable');
@@ -1781,7 +1762,6 @@
                 }
             });
         }
-
         // PERBAIKAN: Fungsi untuk membuat chart dengan label hanya pada legend
         function createCharts(data) {
             // Hancurkan chart sebelumnya jika ada
@@ -2039,12 +2019,10 @@
             });
             // Chart 3: Status Distribution (Doughnut Chart) - LABEL HANYA PADA LEGEND
             const statusDistributionCtx = document.getElementById('statusDistributionChart').getContext('2d');
-            
             // Hitung persentase
             const totalStatus = normalCount + suddenlyCount;
             const normalPercentage = totalStatus > 0 ? Math.round((normalCount / totalStatus) * 100) : 0;
             const suddenlyPercentage = totalStatus > 0 ? Math.round((suddenlyCount / totalStatus) * 100) : 0;
-            
             // Update legend untuk Status Distribution
             const statusDistributionLegend = document.getElementById('statusDistributionLegend');
             statusDistributionLegend.innerHTML = `
@@ -2057,7 +2035,6 @@
                     <span>Suddenly: ${suddenlyCount} (${suddenlyPercentage}%)</span>
                 </div>
             `;
-            
             currentCharts.statusDistribution = new Chart(statusDistributionCtx, {
                 type: 'doughnut',
                 data: {
@@ -2170,7 +2147,6 @@
                 }
             });
         }
-
         // Fungsi untuk update chart status order
         function updateStatusOrderChart(data) {
             const normalCount = data.filter(item => item.orderStatusType === "Normal").length;
@@ -2211,7 +2187,6 @@
                 }
             });
         }
-
         // Fungsi untuk filter data dashboard dengan perbaikan parsing tanggal
         function filterDataForDashboard(data) {
             const startDate = document.getElementById('dashboard-start-date').value;
@@ -2220,7 +2195,6 @@
             const status = document.getElementById('dashboard-status-filter').value;
             return filterData(data, startDate, endDate, plant, status);
         }
-
         // Fungsi untuk filter data status order
         function filterDataForStatus(data) {
             const startDate = document.getElementById('status-start-date').value;
@@ -2233,7 +2207,6 @@
             }
             return filteredData;
         }
-
         // Fungsi untuk filter data dengan perbaikan parsing tanggal
         function filterData(data, startDate, endDate, plant, status) {
             return data.filter(item => {
@@ -2256,7 +2229,6 @@
                 return dateMatch && plantMatch && statusMatch;
             });
         }
-
         // Fungsi untuk menentukan status berdasarkan kuantitas
         function determineStatus(qtyOrder, qtyDelivery, qtyCancel) {
             if (qtyOrder === qtyCancel) {
@@ -2271,7 +2243,6 @@
                 return 'I : Pending Confirmation'; // Default status
             }
         }
-
         // Fungsi untuk toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -2279,17 +2250,14 @@
             sidebar.classList.toggle('hidden');
             mainContent.classList.toggle('expanded');
         }
-
         // Inisialisasi aplikasi
         document.addEventListener('DOMContentLoaded', function() {
             // Set current date
             const now = new Date();
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             document.getElementById('currentDate').textContent = now.toLocaleDateString('id-ID', options);
-            
             // Hapus default dates yang sebelumnya hardcoded
             // Biarkan filter date kosong sampai file diupload
-
             // File upload handler
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -2356,18 +2324,14 @@
                     const newQtyDelivery = parseFloat(document.getElementById('edit-qty-delivery').value);
                     const newQtyCancel = parseFloat(document.getElementById('edit-qty-cancel').value);
                     const newRemarks = document.getElementById('edit-remarks').value;
-                    
                     orderData[currentEditingRow].qtyOrder = newQtyOrder;
                     orderData[currentEditingRow].qtyDelivery = newQtyDelivery;
                     orderData[currentEditingRow].qtyCancel = newQtyCancel;
                     orderData[currentEditingRow].remarks = newRemarks;
-                    
                     // PERBAIKAN: Hitung ulang qtyRemain
                     orderData[currentEditingRow].qtyRemain = newQtyOrder - newQtyDelivery;
-                    
                     // PERBAIKAN: Tentukan status berdasarkan kuantitas
                     orderData[currentEditingRow].status = determineStatus(newQtyOrder, newQtyDelivery, newQtyCancel);
-                    
                     // Update UI
                     populateStatusTable(orderData);
                     populateOrderTable(orderData);

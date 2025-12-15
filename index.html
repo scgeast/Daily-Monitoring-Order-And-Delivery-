@@ -400,6 +400,23 @@
             color: var(--secondary);
             font-size: 14px;
         }
+        .chart-period {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--dark);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .chart-period i {
+            color: var(--secondary);
+            font-size: 11px;
+        }
         .chart-legend {
             display: flex;
             gap: 8px;
@@ -676,6 +693,9 @@
             .chart-title {
                 font-size: 12px;
             }
+            .chart-period {
+                font-size: 11px;
+            }
         }
         @media (max-width: 1024px) {
             .sidebar {
@@ -730,6 +750,10 @@
             }
             .stat-label {
                 font-size: 8px;
+            }
+            .chart-period {
+                font-size: 10px;
+                padding: 3px 8px;
             }
         }
         @media (max-width: 768px) {
@@ -811,6 +835,17 @@
             }
             .project-details {
                 height: 600px;
+            }
+            .chart-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .chart-period {
+                align-self: flex-end;
+                margin-top: -30px;
+                font-size: 10px;
+                padding: 3px 8px;
             }
         }
         @media (max-width: 576px) {
@@ -900,6 +935,10 @@
             }
             .stat-label {
                 font-size: 11px;
+            }
+            .chart-period {
+                font-size: 13px;
+                padding: 5px 12px;
             }
         }
         .filter-section h3 {
@@ -1329,7 +1368,11 @@
                         <div class="wide-chart-container">
                             <div class="chart-header">
                                 <div class="chart-title" id="qtyOrderDeliveryTitle">
-                                    <i class="fas fa-industry"></i> Qty Order & Delivery Per Plant
+                                    <i class="fas fa-industry"></i> Qty Order & Delivery Per Plant - All Plants
+                                </div>
+                                <!-- ELEMEN PERIODE DITAMBAHKAN DI SINI -->
+                                <div class="chart-period" id="qtyOrderDeliveryPeriod">
+                                    <i class="far fa-calendar-alt"></i> Period: All Dates
                                 </div>
                             </div>
                             <div class="wide-chart-box">
@@ -1499,6 +1542,7 @@
             updateDateFilters(orderData);
             updateDashboardStats(orderData);
             createCharts(orderData);
+            updateChartPeriod(); // Update period display
         }
 
         function updateDateFilters(data) {
@@ -1612,6 +1656,44 @@
             const month = months[date.getMonth()];
             const year = date.getFullYear();
             return `${day} ${month} ${year}`;
+        }
+
+        // FUNGSI BARU: Update tampilan periode chart
+        function updateChartPeriod() {
+            const startDateInput = document.getElementById('dashboard-start-date');
+            const endDateInput = document.getElementById('dashboard-end-date');
+            const periodElement = document.getElementById('qtyOrderDeliveryPeriod');
+            
+            const startDate = startDateInput.value;
+            const endDate = endDateInput.value;
+            
+            let periodText = "";
+            
+            if (startDate && endDate) {
+                if (startDate === endDate) {
+                    // Jika tanggal sama, tampilkan hanya satu tanggal
+                    const date = new Date(startDate);
+                    periodText = `<i class="far fa-calendar-alt"></i> ${formatDate(date)}`;
+                } else {
+                    // Jika berbeda, tampilkan range
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    periodText = `<i class="far fa-calendar-alt"></i> ${formatDate(start)} - ${formatDate(end)}`;
+                }
+            } else if (startDate) {
+                // Hanya start date yang diisi
+                const start = new Date(startDate);
+                periodText = `<i class="far fa-calendar-alt"></i> From ${formatDate(start)}`;
+            } else if (endDate) {
+                // Hanya end date yang diisi
+                const end = new Date(endDate);
+                periodText = `<i class="far fa-calendar-alt"></i> Until ${formatDate(end)}`;
+            } else {
+                // Tidak ada filter tanggal
+                periodText = `<i class="far fa-calendar-alt"></i> All Dates`;
+            }
+            
+            periodElement.innerHTML = periodText;
         }
 
         function initializeTruckCounts() {
@@ -2369,7 +2451,7 @@
                 }
             });
 
-            // 4. Qty Order & Delivery Chart - DENGAN PERBAIKAN LEGEND
+            // 4. Qty Order & Delivery Chart
             const qtyOrderDeliveryCtx = document.getElementById('qtyOrderDeliveryChart').getContext('2d');
             
             const orderDataValues = sortedPlants.map(plant => plantTotals[plant].order);
@@ -2418,14 +2500,14 @@
                 };
             });
 
-            // Buat custom legend untuk plant dengan posisi yang lebih rendah dan teks digeser ke kanan
+            // Buat custom legend untuk plant
             const customLegend = {
                 id: 'customLegend',
                 afterDraw(chart) {
                     const ctx = chart.ctx;
                     const xAxis = chart.scales.x;
                     const yAxis = chart.scales.y;
-                    const legendHeight = 70; // DITINGKATKAN: dari 60 ke 70
+                    const legendHeight = 70;
                     
                     // Simpan state canvas
                     ctx.save();
@@ -2434,7 +2516,7 @@
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
                     ctx.fillRect(
                         chart.chartArea.left, 
-                        chart.chartArea.bottom + 15, // DITURUNKAN: dari 5 ke 15
+                        chart.chartArea.bottom + 15,
                         chart.chartArea.width, 
                         legendHeight
                     );
@@ -2442,33 +2524,33 @@
                     // Hitung posisi untuk setiap plant
                     const plantCount = sortedPlants.length;
                     const columnWidth = chart.chartArea.width / plantCount;
-                    const legendStartY = chart.chartArea.bottom + 25; // DITURUNKAN: dari 15 ke 25
+                    const legendStartY = chart.chartArea.bottom + 25;
                     
                     // Gambar legend untuk setiap plant
                     sortedPlants.forEach((plant, index) => {
                         const xPos = chart.chartArea.left + (index * columnWidth) + (columnWidth / 2);
                         const plantInfo = plantLegendColors[index];
                         
-                        // GESER KE KANAN: warna kotak Order
+                        // Warna kotak Order
                         ctx.fillStyle = plantInfo.orderColor;
-                        ctx.fillRect(xPos - 20, legendStartY, 8, 8); // DIGESER: dari xPos - 25 ke xPos - 20
+                        ctx.fillRect(xPos - 20, legendStartY, 8, 8);
                         
-                        // GESER KE KANAN: warna kotak Delivery
+                        // Warna kotak Delivery
                         ctx.fillStyle = plantInfo.deliveryColor;
-                        ctx.fillRect(xPos - 20, legendStartY + 15, 8, 8); // DIGESER: dari xPos - 25 ke xPos - 20
+                        ctx.fillRect(xPos - 20, legendStartY + 15, 8, 8);
                         
                         // Tulis nama plant
                         ctx.fillStyle = '#333';
                         ctx.font = 'bold 10px Arial';
                         ctx.textAlign = 'center';
                         
-                        // GESER KE KANAN: teks "Order"
-                        ctx.fillText('Order', xPos + 5, legendStartY + 7); // DIGESER: dari xPos ke xPos + 5
+                        // Teks "Order"
+                        ctx.fillText('Order', xPos + 5, legendStartY + 7);
                         
-                        // GESER KE KANAN: teks "Delivery"
-                        ctx.fillText('Delivery', xPos + 10, legendStartY + 22); // DIGESER: dari xPos ke xPos + 10
+                        // Teks "Delivery"
+                        ctx.fillText('Delivery', xPos + 10, legendStartY + 22);
                         
-                        // Tulis nama plant (tetap di tengah)
+                        // Tulis nama plant
                         ctx.font = 'bold 11px Arial';
                         ctx.fillText(plant, xPos, legendStartY + 40);
                     });
@@ -2619,7 +2701,7 @@
                     layout: {
                         padding: { 
                             top: 10,
-                            bottom: 90, // DITINGKATKAN: dari 80 ke 90 (legend diturunkan)
+                            bottom: 90,
                             left: 10,
                             right: 10
                         }
@@ -2797,6 +2879,16 @@
             document.getElementById('dashboard-apply-filter').addEventListener('click', function() {
                 updateDashboardStats(orderData);
                 createCharts(orderData);
+                updateChartPeriod(); // Update period when filter applied
+            });
+
+            // Event listeners untuk update period saat tanggal berubah
+            document.getElementById('dashboard-start-date').addEventListener('change', function() {
+                updateChartPeriod();
+            });
+            
+            document.getElementById('dashboard-end-date').addEventListener('change', function() {
+                updateChartPeriod();
             });
 
             document.getElementById('sidebarToggleBtn').addEventListener('click', toggleSidebar);
@@ -2828,6 +2920,7 @@
                     populateOrderTable(orderData);
                     updateDashboardStats(orderData);
                     createCharts(orderData);
+                    updateChartPeriod();
 
                     document.getElementById('editModal').style.display = 'none';
                     alert('Data berhasil diperbarui!');

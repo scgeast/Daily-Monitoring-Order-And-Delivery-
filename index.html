@@ -358,6 +358,9 @@
         .stat-card.cancel-kpi {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
+        .stat-card.progress-kpi {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -444,7 +447,37 @@
             position: relative;
             height: 180px;
         }
+        
+        /* PERBAIKAN UTAMA: Container chart Qty Order & Delivery */
         .wide-chart-container {
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f0f0f0;
+            min-height: 420px; /* Tinggi minimal ditingkatkan */
+            height: auto; /* Ubah dari fixed height ke auto */
+            max-height: 600px; /* Batas maksimal tinggi */
+            overflow: hidden;
+        }
+        .wide-chart-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .wide-chart-box {
+            flex: 1;
+            min-height: 320px; /* Tinggi minimal ditingkatkan */
+            position: relative;
+            height: auto; /* Ubah dari fixed height ke auto */
+            width: 100%;
+            overflow: visible !important; /* Pastikan tidak ada overflow yang memotong */
+        }
+        
+        .line-chart-container {
             grid-column: 1 / -1;
             background-color: white;
             border-radius: 10px;
@@ -454,18 +487,18 @@
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid #f0f0f0;
-            min-height: 380px;
-            height: 380px;
+            min-height: 320px;
+            height: 320px;
         }
-        .wide-chart-container:hover {
+        .line-chart-container:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .wide-chart-box {
+        .line-chart-box {
             flex: 1;
-            min-height: 280px;
+            min-height: 220px;
             position: relative;
-            height: 280px;
+            height: 220px;
         }
         .plant-labels-container {
             display: flex;
@@ -626,13 +659,22 @@
                 height: 170px;
             }
             .wide-chart-container {
-                min-height: 350px;
-                height: 350px;
-                padding: 12px;
+                min-height: 380px;
+                height: auto;
+                padding: 15px;
             }
             .wide-chart-box {
-                min-height: 250px;
-                height: 250px;
+                min-height: 280px;
+                height: auto;
+            }
+            .line-chart-container {
+                min-height: 300px;
+                height: 300px;
+                padding: 12px;
+            }
+            .line-chart-box {
+                min-height: 200px;
+                height: 200px;
             }
             .stats-container {
                 grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
@@ -666,12 +708,20 @@
                 height: 160px;
             }
             .wide-chart-container {
-                min-height: 330px;
-                height: 330px;
+                min-height: 350px;
+                height: auto;
             }
             .wide-chart-box {
-                min-height: 230px;
-                height: 230px;
+                min-height: 250px;
+                height: auto;
+            }
+            .line-chart-container {
+                min-height: 280px;
+                height: 280px;
+            }
+            .line-chart-box {
+                min-height: 180px;
+                height: 180px;
             }
             .stats-container {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -726,12 +776,20 @@
                 height: 150px;
             }
             .wide-chart-container {
-                min-height: 310px;
-                height: 310px;
+                min-height: 320px;
+                height: auto;
             }
             .wide-chart-box {
-                min-height: 210px;
-                height: 210px;
+                min-height: 220px;
+                height: auto;
+            }
+            .line-chart-container {
+                min-height: 260px;
+                height: 260px;
+            }
+            .line-chart-box {
+                min-height: 160px;
+                height: 160px;
             }
             .stats-container {
                 grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
@@ -797,8 +855,13 @@
                 padding: 12px;
             }
             .wide-chart-container {
-                min-height: 280px;
-                height: 280px;
+                min-height: 300px;
+                height: auto;
+                padding: 12px;
+            }
+            .line-chart-container {
+                min-height: 240px;
+                height: 240px;
                 padding: 12px;
             }
             .chart-box {
@@ -806,8 +869,12 @@
                 height: 140px;
             }
             .wide-chart-box {
-                min-height: 180px;
-                height: 180px;
+                min-height: 200px;
+                height: auto;
+            }
+            .line-chart-box {
+                min-height: 140px;
+                height: 140px;
             }
             .stats-container {
                 grid-template-columns: repeat(3, 1fr);
@@ -855,8 +922,13 @@
                 padding: 10px;
             }
             .wide-chart-container {
-                min-height: 260px;
-                height: 260px;
+                min-height: 280px;
+                height: auto;
+                padding: 10px;
+            }
+            .line-chart-container {
+                min-height: 220px;
+                height: 220px;
                 padding: 10px;
             }
             .chart-box {
@@ -864,8 +936,12 @@
                 height: 130px;
             }
             .wide-chart-box {
-                min-height: 160px;
-                height: 160px;
+                min-height: 180px;
+                height: auto;
+            }
+            .line-chart-box {
+                min-height: 120px;
+                height: 120px;
             }
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -911,13 +987,22 @@
                 height: 200px;
             }
             .wide-chart-container {
-                min-height: 400px;
-                height: 400px;
+                min-height: 450px;
+                height: auto;
                 padding: 18px;
             }
             .wide-chart-box {
-                min-height: 300px;
-                height: 300px;
+                min-height: 350px;
+                height: auto;
+            }
+            .line-chart-container {
+                min-height: 350px;
+                height: 350px;
+                padding: 18px;
+            }
+            .line-chart-box {
+                min-height: 250px;
+                height: 250px;
             }
             .stats-container {
                 grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
@@ -1067,6 +1152,19 @@
             padding: 2px 6px;
             border-radius: 3px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .datalabel-percent {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 11px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .progress-line {
+            border-radius: 5px;
+            border-width: 2px;
         }
     </style>
 </head>
@@ -1320,7 +1418,7 @@
                             <div class="stat-value" id="total-project-remain">-</div>
                             <div class="stat-label">Project Remain</div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card cancel-kpi">
                             <div class="stat-icon"><i class="fas fa-ban"></i></div>
                             <div class="stat-value" id="total-project-cancel">-</div>
                             <div class="stat-label">Project Cancel</div>
@@ -1329,6 +1427,12 @@
                             <div class="stat-icon"><i class="fas fa-truck"></i></div>
                             <div class="stat-value" id="total-truck-count">-</div>
                             <div class="stat-label">Total Truck Mixer</div>
+                        </div>
+                        <!-- Hanya satu KPI card untuk Delivery Progress -->
+                        <div class="stat-card progress-kpi">
+                            <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                            <div class="stat-value" id="delivery-progress-percent">-</div>
+                            <div class="stat-label">Delivery Progress</div>
                         </div>
                     </div>
                     <div class="chart-grid">
@@ -1365,21 +1469,40 @@
                             </div>
                             <div class="chart-legend" id="statusDistributionLegend"></div>
                         </div>
-                        <div class="wide-chart-container">
-                            <div class="chart-header">
-                                <div class="chart-title" id="qtyOrderDeliveryTitle">
-                                    <i class="fas fa-industry"></i> Qty Order & Delivery Per Plant - All Plants
-                                </div>
-                                <!-- ELEMEN PERIODE DITAMBAHKAN DI SINI -->
-                                <div class="chart-period" id="qtyOrderDeliveryPeriod">
-                                    <i class="far fa-calendar-alt"></i> Period: All Dates
-                                </div>
+                    </div>
+                    
+                    <!-- Qty Order & Delivery Chart dengan Progress Percentage LINE -->
+                    <div class="wide-chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title" id="qtyOrderDeliveryTitle">
+                                <i class="fas fa-industry"></i> Qty Order & Delivery Per Plant
                             </div>
-                            <div class="wide-chart-box">
-                                <canvas id="qtyOrderDeliveryChart"></canvas>
+                            <div class="chart-period" id="qtyOrderDeliveryPeriod">
+                                <i class="far fa-calendar-alt"></i> Period: All Dates
                             </div>
                         </div>
+                        <div class="wide-chart-box">
+                            <canvas id="qtyOrderDeliveryChart"></canvas>
+                        </div>
+                        <div class="chart-legend" id="qtyOrderDeliveryLegend"></div>
                     </div>
+                    
+                    <!-- Chart Delivery Progress Percentage (dipertahankan untuk detail) -->
+                    <div class="line-chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title" id="progressPercentageTitle">
+                                <i class="fas fa-percentage"></i> Delivery Progress Percentage Per Plant
+                            </div>
+                            <div class="chart-period" id="progressPercentagePeriod">
+                                <i class="far fa-calendar-alt"></i> All Dates
+                            </div>
+                        </div>
+                        <div class="line-chart-box">
+                            <canvas id="progressPercentageChart"></canvas>
+                        </div>
+                        <div class="chart-legend" id="progressPercentageLegend"></div>
+                    </div>
+                    
                     <div class="chart-container project-details">
                         <div class="chart-title">
                             <i class="fas fa-table"></i> Project Remain Details
@@ -1542,7 +1665,7 @@
             updateDateFilters(orderData);
             updateDashboardStats(orderData);
             createCharts(orderData);
-            updateChartPeriod(); // Update period display
+            updateChartPeriod();
         }
 
         function updateDateFilters(data) {
@@ -1658,11 +1781,11 @@
             return `${day} ${month} ${year}`;
         }
 
-        // FUNGSI BARU: Update tampilan periode chart
         function updateChartPeriod() {
             const startDateInput = document.getElementById('dashboard-start-date');
             const endDateInput = document.getElementById('dashboard-end-date');
             const periodElement = document.getElementById('qtyOrderDeliveryPeriod');
+            const progressPeriodElement = document.getElementById('progressPercentagePeriod');
             
             const startDate = startDateInput.value;
             const endDate = endDateInput.value;
@@ -1671,29 +1794,25 @@
             
             if (startDate && endDate) {
                 if (startDate === endDate) {
-                    // Jika tanggal sama, tampilkan hanya satu tanggal
                     const date = new Date(startDate);
                     periodText = `<i class="far fa-calendar-alt"></i> ${formatDate(date)}`;
                 } else {
-                    // Jika berbeda, tampilkan range
                     const start = new Date(startDate);
                     const end = new Date(endDate);
                     periodText = `<i class="far fa-calendar-alt"></i> ${formatDate(start)} - ${formatDate(end)}`;
                 }
             } else if (startDate) {
-                // Hanya start date yang diisi
                 const start = new Date(startDate);
                 periodText = `<i class="far fa-calendar-alt"></i> From ${formatDate(start)}`;
             } else if (endDate) {
-                // Hanya end date yang diisi
                 const end = new Date(endDate);
                 periodText = `<i class="far fa-calendar-alt"></i> Until ${formatDate(end)}`;
             } else {
-                // Tidak ada filter tanggal
                 periodText = `<i class="far fa-calendar-alt"></i> All Dates`;
             }
             
             periodElement.innerHTML = periodText;
+            progressPeriodElement.innerHTML = periodText;
         }
 
         function initializeTruckCounts() {
@@ -1954,6 +2073,9 @@
             const totalDelivery = filteredData.reduce((sum, item) => sum + item.qtyDelivery, 0);
             const totalRemain = filteredData.reduce((sum, item) => sum + item.qtyRemain, 0);
             const totalCancel = filteredData.reduce((sum, item) => sum + item.qtyCancel, 0);
+            
+            // Calculate Delivery Progress Percentage only
+            const deliveryProgressPercent = totalOrderQty > 0 ? (totalDelivery / totalOrderQty * 100) : 0;
 
             const projectSet = new Set();
             const projectDeliveredSet = new Set();
@@ -1991,6 +2113,7 @@
                 totalTargetVolume = Object.values(targetVolumes).reduce((sum, volume) => sum + volume, 0);
             }
 
+            // Update KPI cards
             document.getElementById('plant-remain-count').textContent = plantRemainCount;
             document.getElementById('total-order-qty').textContent = totalOrderQty.toFixed(1);
             document.getElementById('total-delivery').textContent = totalDelivery.toFixed(1);
@@ -2002,6 +2125,21 @@
             document.getElementById('total-project-cancel').textContent = totalProjectCancel;
             document.getElementById('total-truck-count').textContent = totalTruckCount;
             document.getElementById('total-target-volume').textContent = totalTargetVolume.toFixed(1);
+            
+            // Update Delivery Progress Percentage KPI card only
+            document.getElementById('delivery-progress-percent').textContent = deliveryProgressPercent.toFixed(1) + '%';
+            
+            // Color coding for Delivery Progress Percentage
+            const deliveryProgressElement = document.getElementById('delivery-progress-percent');
+            
+            // Set color based on percentage
+            if (deliveryProgressPercent >= 80) {
+                deliveryProgressElement.style.color = '#27ae60'; // Green
+            } else if (deliveryProgressPercent >= 60) {
+                deliveryProgressElement.style.color = '#f39c12'; // Orange
+            } else {
+                deliveryProgressElement.style.color = '#e74c3c'; // Red
+            }
         }
 
         function updateProjectRemainDetails(data) {
@@ -2205,6 +2343,7 @@
             document.getElementById('performProjectTitle').innerHTML = `<i class="fas fa-chart-pie"></i> Perform Project - ${plantTitle}`;
             document.getElementById('statusDistributionTitle').innerHTML = `<i class="fas fa-chart-line"></i> Status Distribution - ${plantTitle}`;
             document.getElementById('qtyOrderDeliveryTitle').innerHTML = `<i class="fas fa-industry"></i> Qty Order & Delivery Per Plant - ${plantTitle}`;
+            document.getElementById('progressPercentageTitle').innerHTML = `<i class="fas fa-percentage"></i> Delivery Progress - ${plantTitle}`;
 
             let totalTargetVolume = 0;
             if (selectedPlant) {
@@ -2451,113 +2590,54 @@
                 }
             });
 
-            // 4. Qty Order & Delivery Chart
+            // 4. Qty Order & Delivery Chart dengan Progress Percentage LINE
             const qtyOrderDeliveryCtx = document.getElementById('qtyOrderDeliveryChart').getContext('2d');
             
             const orderDataValues = sortedPlants.map(plant => plantTotals[plant].order);
             const deliveryDataValues = sortedPlants.map(plant => plantTotals[plant].delivery);
             
-            // Warna untuk Qty Order (dataset pertama)
-            const orderColors = sortedPlants.map((_, index) => {
-                const colors = [
-                    'rgba(54, 162, 235, 0.8)',    // Biru terang
-                    'rgba(255, 99, 132, 0.8)',    // Merah terang
-                    'rgba(75, 192, 192, 0.8)',    // Cyan terang
-                    'rgba(255, 205, 86, 0.8)',    // Kuning terang
-                    'rgba(153, 102, 255, 0.8)',   // Ungu terang
-                    'rgba(255, 159, 64, 0.8)',    // Orange terang
-                    'rgba(201, 203, 207, 0.8)',   // Abu-abu terang
-                    'rgba(0, 128, 128, 0.8)',     // Teal terang
-                    'rgba(139, 69, 19, 0.8)',     // Coklat terang
-                    'rgba(255, 0, 255, 0.8)'      // Magenta terang
-                ];
-                return colors[index % colors.length];
+            // Hitung percentage untuk setiap plant
+            const percentages = sortedPlants.map((plant, index) => {
+                const order = plantTotals[plant].order;
+                const delivery = plantTotals[plant].delivery;
+                return order > 0 ? (delivery / order * 100) : 0;
             });
 
-            // Warna untuk Qty Delivery (dataset kedua) - lebih gelap untuk kontras
-            const deliveryColors = sortedPlants.map((_, index) => {
-                const colors = [
-                    'rgba(31, 119, 180, 0.8)',    // Biru gelap
-                    'rgba(214, 39, 40, 0.8)',     // Merah gelap
-                    'rgba(44, 160, 44, 0.8)',     // Hijau gelap
-                    'rgba(148, 103, 189, 0.8)',   // Ungu gelap
-                    'rgba(140, 86, 75, 0.8)',     // Coklat gelap
-                    'rgba(227, 119, 194, 0.8)',   // Pink gelap
-                    'rgba(127, 127, 127, 0.8)',   // Abu-abu gelap
-                    'rgba(188, 189, 34, 0.8)',    // Kuning-hijau gelap
-                    'rgba(23, 190, 207, 0.8)',    // Cyan gelap
-                    'rgba(158, 218, 229, 0.8)'    // Biru muda gelap
-                ];
-                return colors[index % colors.length];
-            });
+            // Update legend
+            const qtyOrderDeliveryLegend = document.getElementById('qtyOrderDeliveryLegend');
+            qtyOrderDeliveryLegend.innerHTML = `
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(54, 162, 235, 0.7)"></div>
+                    <span>Qty Order</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(31, 119, 180, 0.9)"></div>
+                    <span>Qty Delivered</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(255, 159, 64, 1)"></div>
+                    <span>Progress (%)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(255, 99, 132, 0.5); border: 1px solid rgba(255, 99, 132, 1);"></div>
+                    <span>Target (80%)</span>
+                </div>
+            `;
 
-            // Buat array untuk warna legend plant
-            const plantLegendColors = sortedPlants.map((plant, index) => {
-                return {
-                    plant: plant,
-                    orderColor: orderColors[index % orderColors.length],
-                    deliveryColor: deliveryColors[index % deliveryColors.length]
-                };
-            });
+            // Fungsi untuk menghitung tinggi chart secara dinamis
+            function calculateChartHeight(numPlants) {
+                const baseHeight = 300;
+                const additionalHeight = Math.max(0, (numPlants - 5) * 20);
+                return Math.min(baseHeight + additionalHeight, 500);
+            }
 
-            // Buat custom legend untuk plant
-            const customLegend = {
-                id: 'customLegend',
-                afterDraw(chart) {
-                    const ctx = chart.ctx;
-                    const xAxis = chart.scales.x;
-                    const yAxis = chart.scales.y;
-                    const legendHeight = 70;
-                    
-                    // Simpan state canvas
-                    ctx.save();
-                    
-                    // Gambar background untuk legend area (opsional)
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                    ctx.fillRect(
-                        chart.chartArea.left, 
-                        chart.chartArea.bottom + 15,
-                        chart.chartArea.width, 
-                        legendHeight
-                    );
-                    
-                    // Hitung posisi untuk setiap plant
-                    const plantCount = sortedPlants.length;
-                    const columnWidth = chart.chartArea.width / plantCount;
-                    const legendStartY = chart.chartArea.bottom + 25;
-                    
-                    // Gambar legend untuk setiap plant
-                    sortedPlants.forEach((plant, index) => {
-                        const xPos = chart.chartArea.left + (index * columnWidth) + (columnWidth / 2);
-                        const plantInfo = plantLegendColors[index];
-                        
-                        // Warna kotak Order
-                        ctx.fillStyle = plantInfo.orderColor;
-                        ctx.fillRect(xPos - 20, legendStartY, 8, 8);
-                        
-                        // Warna kotak Delivery
-                        ctx.fillStyle = plantInfo.deliveryColor;
-                        ctx.fillRect(xPos - 20, legendStartY + 15, 8, 8);
-                        
-                        // Tulis nama plant
-                        ctx.fillStyle = '#333';
-                        ctx.font = 'bold 10px Arial';
-                        ctx.textAlign = 'center';
-                        
-                        // Teks "Order"
-                        ctx.fillText('Order', xPos + 5, legendStartY + 7);
-                        
-                        // Teks "Delivery"
-                        ctx.fillText('Delivery', xPos + 10, legendStartY + 22);
-                        
-                        // Tulis nama plant
-                        ctx.font = 'bold 11px Arial';
-                        ctx.fillText(plant, xPos, legendStartY + 40);
-                    });
-                    
-                    ctx.restore();
-                }
-            };
+            // Update tinggi container berdasarkan jumlah plant
+            const chartHeight = calculateChartHeight(sortedPlants.length);
+            const wideChartBox = document.querySelector('.wide-chart-box');
+            const wideChartContainer = document.querySelector('.wide-chart-container');
+            
+            wideChartBox.style.height = chartHeight + 'px';
+            wideChartContainer.style.minHeight = (chartHeight + 100) + 'px';
 
             currentCharts.qtyOrderDelivery = new Chart(qtyOrderDeliveryCtx, {
                 type: 'bar',
@@ -2567,95 +2647,177 @@
                         {
                             label: 'Qty Order',
                             data: orderDataValues,
-                            backgroundColor: orderColors,
-                            borderColor: orderColors.map(color => color.replace('0.8', '1')),
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1,
-                            borderRadius: 3,
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.8,
+                            borderRadius: 4,
+                            barPercentage: 0.6, // PERBAIKAN: Lebar bar ditingkatkan
+                            categoryPercentage: 0.8, // PERBAIKAN: Ruang antar kategori dikurangi
+                            order: 3,
                             datalabels: {
-                                display: function(context) {
-                                    const value = orderDataValues[context.dataIndex];
-                                    return value > 0;
-                                },
-                                formatter: function(value, context) {
+                                display: true,
+                                formatter: function(value) {
                                     return value > 0 ? value.toFixed(1) : '';
                                 },
-                                color: '#000000',
+                                color: '#2c3e50',
                                 font: {
                                     weight: 'bold',
-                                    size: 11
+                                    size: 10
                                 },
                                 anchor: 'end',
                                 align: 'top',
-                                offset: 8,
-                                backgroundColor: 'transparent',
-                                borderWidth: 0,
-                                padding: {
-                                    top: 2,
-                                    bottom: 2,
-                                    left: 4,
-                                    right: 4
-                                }
+                                offset: 6, // Offset ditingkatkan agar tidak menempel
+                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                borderRadius: 3,
+                                padding: 4,
+                                textAlign: 'center',
+                                clip: false // PERBAIKAN PENTING: Tidak memotong label
                             }
                         },
                         {
-                            label: 'Qty Delivery',
+                            label: 'Qty Delivered',
                             data: deliveryDataValues,
-                            backgroundColor: deliveryColors,
-                            borderColor: deliveryColors.map(color => color.replace('0.8', '1')),
+                            backgroundColor: 'rgba(31, 119, 180, 0.9)',
+                            borderColor: 'rgba(31, 119, 180, 1)',
                             borderWidth: 1,
-                            borderRadius: 3,
-                            barPercentage: 0.4,
-                            categoryPercentage: 0.8,
+                            borderRadius: 4,
+                            barPercentage: 0.6, // PERBAIKAN: Lebar bar ditingkatkan
+                            categoryPercentage: 0.8, // PERBAIKAN: Ruang antar kategori dikurangi
+                            order: 2,
                             datalabels: {
-                                display: function(context) {
-                                    const value = deliveryDataValues[context.dataIndex];
-                                    return value > 0;
-                                },
-                                formatter: function(value, context) {
+                                display: true,
+                                formatter: function(value) {
                                     return value > 0 ? value.toFixed(1) : '';
                                 },
-                                color: '#FF0000',
+                                color: '#2c3e50',
                                 font: {
                                     weight: 'bold',
-                                    size: 11
+                                    size: 10
                                 },
                                 anchor: 'end',
                                 align: 'top',
-                                offset: 8,
-                                backgroundColor: 'transparent',
-                                borderWidth: 0,
-                                padding: {
-                                    top: 2,
-                                    bottom: 2,
-                                    left: 4,
-                                    right: 4
-                                }
+                                offset: 6, // Offset ditingkatkan agar tidak menempel
+                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                borderRadius: 3,
+                                padding: 4,
+                                textAlign: 'center',
+                                clip: false // PERBAIKAN PENTING: Tidak memotong label
                             }
+                        },
+                        {
+                            type: 'line',
+                            label: 'Delivery Progress (%)',
+                            data: percentages,
+                            backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            borderWidth: 3,
+                            pointBackgroundColor: 'rgba(255, 159, 64, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            fill: false,
+                            tension: 0.4,
+                            yAxisID: 'yPercentage',
+                            order: 1,
+                            datalabels: {
+                                display: true,
+                                formatter: function(value) {
+                                    return value.toFixed(1) + '%';
+                                },
+                                color: function(context) {
+                                    const value = percentages[context.dataIndex];
+                                    return value >= 80 ? '#27ae60' : value >= 60 ? '#f39c12' : '#e74c3c';
+                                },
+                                font: {
+                                    weight: 'bold',
+                                    size: 10
+                                },
+                                anchor: 'center',
+                                align: 'top',
+                                offset: 10, // Offset ditingkatkan
+                                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                                borderColor: function(context) {
+                                    const value = percentages[context.dataIndex];
+                                    return value >= 80 ? '#27ae60' : value >= 60 ? '#f39c12' : '#e74c3c';
+                                },
+                                borderRadius: 4,
+                                borderWidth: 1,
+                                padding: {
+                                    top: 4,
+                                    bottom: 4,
+                                    left: 6,
+                                    right: 6
+                                },
+                                textAlign: 'center',
+                                clip: false // PERBAIKAN PENTING: Tidak memotong label
+                            }
+                        },
+                        {
+                            type: 'line',
+                            label: 'Target (80%)',
+                            data: new Array(sortedPlants.length).fill(80),
+                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                            borderColor: 'rgba(255, 99, 132, 0.5)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            pointHoverRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            yAxisID: 'yPercentage',
+                            order: 0
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 50, // Padding atas ditingkatkan untuk data label
+                            right: 20,
+                            bottom: 100, // Padding bawah ditingkatkan untuk label plant
+                            left: 20
+                        }
+                    },
                     plugins: {
                         legend: { 
-                            display: false,
+                            display: false 
                         },
                         tooltip: {
+                            mode: 'index',
+                            intersect: false,
                             callbacks: {
                                 label: function(context) {
-                                    return `${context.dataset.label}: ${context.parsed.y.toFixed(1)} m³`;
+                                    const label = context.dataset.label;
+                                    const value = context.parsed.y;
+                                    const index = context.dataIndex;
+                                    
+                                    if (context.datasetIndex === 0) {
+                                        // Qty Order
+                                        return `Order: ${value.toFixed(1)} m³`;
+                                    } else if (context.datasetIndex === 1) {
+                                        // Qty Delivery
+                                        const percentage = percentages[index];
+                                        return `Delivered: ${value.toFixed(1)} m³ (${percentage.toFixed(1)}% of order)`;
+                                    } else if (context.datasetIndex === 2) {
+                                        // Progress Percentage
+                                        const plant = sortedPlants[index];
+                                        const order = orderDataValues[index];
+                                        const delivery = deliveryDataValues[index];
+                                        const percentage = percentages[index];
+                                        return `Progress: ${percentage.toFixed(1)}% (${delivery.toFixed(1)}/${order.toFixed(1)} m³)`;
+                                    } else if (context.datasetIndex === 3) {
+                                        // Target line
+                                        return `Target: ${value.toFixed(1)}%`;
+                                    }
                                 }
                             }
                         },
                         datalabels: {
                             display: true,
-                            color: '#000000',
-                            formatter: function(value, context) {
-                                return value > 0 ? value.toFixed(1) : '';
-                            }
+                            clip: false // PERBAIKAN PENTING: Tidak memotong label
                         }
                     },
                     scales: {
@@ -2671,11 +2833,40 @@
                                 font: { size: 10 },
                                 callback: function(value) {
                                     return value.toFixed(1);
-                                }
+                                },
+                                padding: 10
                             },
                             grid: { 
                                 color: 'rgba(0,0,0,0.1)',
                                 drawBorder: false
+                            },
+                            afterFit: function(scale) {
+                                scale.width = 60; // Lebar axis y
+                            }
+                        },
+                        yPercentage: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Progress (%)',
+                                font: { size: 11, weight: 'bold' }
+                            },
+                            ticks: {
+                                font: { size: 9 },
+                                callback: function(value) {
+                                    return value + '%';
+                                },
+                                padding: 10
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                            afterFit: function(scale) {
+                                scale.width = 50; // Lebar axis yPercentage
                             }
                         },
                         x: {
@@ -2685,10 +2876,188 @@
                                 drawBorder: false
                             },
                             ticks: {
-                                maxRotation: 45,
-                                minRotation: 45,
+                                maxRotation: sortedPlants.length > 10 ? 90 : 45,
+                                minRotation: sortedPlants.length > 10 ? 90 : 45,
                                 font: { 
-                                    size: 10,
+                                    size: sortedPlants.length > 10 ? 9 : 10,
+                                    weight: 'bold'
+                                },
+                                padding: 15
+                            },
+                            afterFit: function(scale) {
+                                // Sesuaikan tinggi berdasarkan jumlah plant
+                                scale.height = Math.max(40, sortedPlants.length * 3);
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+
+            // 5. Progress Percentage Chart Line (untuk detail)
+            const progressPercentageCtx = document.getElementById('progressPercentageChart').getContext('2d');
+            const progressPercentageLegend = document.getElementById('progressPercentageLegend');
+            
+            const plantProgressData = [];
+            
+            plants.forEach(plant => {
+                const plantData = filteredData.filter(item => item.plant === plant);
+                const plantOrderQty = plantData.reduce((sum, item) => sum + item.qtyOrder, 0);
+                const plantDeliveryQty = plantData.reduce((sum, item) => sum + item.qtyDelivery, 0);
+                
+                const deliveryPercentage = plantOrderQty > 0 ? (plantDeliveryQty / plantOrderQty * 100) : 0;
+                
+                plantProgressData.push({
+                    plant: plant,
+                    deliveryPercentage: deliveryPercentage,
+                    orderQty: plantOrderQty,
+                    deliveryQty: plantDeliveryQty
+                });
+            });
+            
+            // Sort plants by delivery percentage (descending)
+            plantProgressData.sort((a, b) => b.deliveryPercentage - a.deliveryPercentage);
+            
+            const plantLabels = plantProgressData.map(item => item.plant);
+            const deliveryPercentages = plantProgressData.map(item => item.deliveryPercentage);
+            
+            progressPercentageLegend.innerHTML = `
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(75, 192, 192, 0.8)"></div>
+                    <span>Delivery Progress (%)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(255, 99, 132, 0.8)"></div>
+                    <span>Target (80%)</span>
+                </div>
+            `;
+            
+            currentCharts.progressPercentage = new Chart(progressPercentageCtx, {
+                type: 'line',
+                data: {
+                    labels: plantLabels,
+                    datasets: [
+                        {
+                            label: 'Delivery Progress (%)',
+                            data: deliveryPercentages,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        },
+                        {
+                            label: 'Target (80%)',
+                            data: new Array(plantLabels.length).fill(80),
+                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                            borderColor: 'rgba(255, 99, 132, 0.5)',
+                            borderWidth: 2,
+                            borderDash: [3, 3],
+                            fill: false,
+                            pointRadius: 0,
+                            tension: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            display: false 
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const plant = plantProgressData[context.dataIndex];
+                                    let label = context.dataset.label;
+                                    let value = context.parsed.y.toFixed(1) + '%';
+                                    
+                                    if (context.datasetIndex === 0) {
+                                        // Delivery progress
+                                        label = `Delivery Progress: ${value}`;
+                                        label += `\n${plant.deliveryQty.toFixed(1)} / ${plant.orderQty.toFixed(1)} m³`;
+                                        label += `\nPlant: ${plant.plant}`;
+                                    } else if (context.datasetIndex === 1) {
+                                        // Target line
+                                        label = `Target: ${value}`;
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: true,
+                            color: function(context) {
+                                return context.datasetIndex === 0 ? '#333' : 'rgba(255, 99, 132, 0.8)';
+                            },
+                            font: {
+                                weight: 'bold',
+                                size: 10
+                            },
+                            formatter: function(value, context) {
+                                if (context.datasetIndex === 0) {
+                                    return value.toFixed(1) + '%';
+                                }
+                                return '';
+                            },
+                            align: 'top',
+                            anchor: 'end',
+                            offset: 6,
+                            backgroundColor: function(context) {
+                                return context.datasetIndex === 0 ? 'rgba(255, 255, 255, 0.9)' : 'transparent';
+                            },
+                            borderColor: function(context) {
+                                return context.datasetIndex === 0 ? 'rgba(75, 192, 192, 0.3)' : 'transparent';
+                            },
+                            borderRadius: 4,
+                            padding: {
+                                top: 4,
+                                bottom: 4,
+                                left: 6,
+                                right: 6
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Delivery Progress (%)',
+                                font: { size: 11, weight: 'bold' }
+                            },
+                            ticks: {
+                                font: { size: 10 },
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: { 
+                                color: 'rgba(0,0,0,0.1)',
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: { 
+                                color: 'rgba(0,0,0,0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxRotation: plantLabels.length > 10 ? 90 : 45,
+                                minRotation: plantLabels.length > 10 ? 90 : 45,
+                                font: { 
+                                    size: plantLabels.length > 10 ? 9 : 10,
                                     weight: 'bold'
                                 }
                             }
@@ -2697,17 +3066,9 @@
                     animation: {
                         duration: 1000,
                         easing: 'easeOutQuart'
-                    },
-                    layout: {
-                        padding: { 
-                            top: 10,
-                            bottom: 90,
-                            left: 10,
-                            right: 10
-                        }
                     }
                 },
-                plugins: [ChartDataLabels, customLegend]
+                plugins: [ChartDataLabels]
             });
         }
 
@@ -2879,7 +3240,7 @@
             document.getElementById('dashboard-apply-filter').addEventListener('click', function() {
                 updateDashboardStats(orderData);
                 createCharts(orderData);
-                updateChartPeriod(); // Update period when filter applied
+                updateChartPeriod();
             });
 
             // Event listeners untuk update period saat tanggal berubah

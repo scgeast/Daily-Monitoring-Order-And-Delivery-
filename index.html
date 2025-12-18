@@ -34,6 +34,7 @@
             color: #333;
             display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         .sidebar {
             width: 320px;
@@ -43,6 +44,11 @@
             display: flex;
             flex-direction: column;
             z-index: 1000;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            transform: translateX(0);
         }
         .sidebar-header {
             padding: 20px;
@@ -129,23 +135,36 @@
             flex-direction: column;
             overflow: hidden;
             transition: margin-left 0.3s ease;
+            margin-left: 320px;
+            width: calc(100% - 320px);
         }
         .main-content.expanded {
             margin-left: 0;
+            width: 100%;
         }
+        /* HEADER - STICKY FIXED */
         header {
-            padding: 20px 25px 10px 40px;
+            padding: 15px 25px 15px 50px;
             background: var(--header-gradient);
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: none;
-            position: relative;
-            height: 50px;
+            position: fixed;
+            top: 0;
+            left: 320px;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            height: 60px;
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+        .main-content.expanded header {
+            left: 0;
         }
         .header-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -157,7 +176,7 @@
             font-size: 20px;
         }
         .current-date {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -169,6 +188,7 @@
             overflow-y: auto;
             width: 100%;
             max-width: 100%;
+            margin-top: 60px; /* Tambahkan margin top untuk header fixed */
         }
         .tabs {
             display: flex;
@@ -548,10 +568,11 @@
             border-radius: 4px;
             text-align: center;
         }
+        /* SIDEBAR TOGGLE BUTTON - DIATAS HEADER */
         .sidebar-toggle-btn {
             position: fixed;
-            left: 2px;
-            top: 10px;
+            left: 10px;
+            top: 15px;
             z-index: 1001;
             background: transparent;
             color: white;
@@ -563,20 +584,19 @@
             box-shadow: none;
             transition: all 0.3s ease;
         }
-
         /* PERBAIKAN: Project Details Layout yang Lebih Rapi dan Dekat */
         .chart-container.project-details {
-            height: auto; /* Biarkan tinggi menyesuaikan konten */
-            min-height: 300px; /* Atur tinggi minimum jika diperlukan */
-            padding-top: 10px; /* Kurangi padding atas kontainer utama chart */
-            padding-bottom: 10px; /* Kurangi padding bawah jika perlu */
+            height: auto;
+            min-height: 300px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
         .project-details .chart-title {
-            margin: 0; /* Hapus margin default */
-            padding: 0 15px; /* Tambahkan padding horizontal untuk konsistensi */
-            padding-bottom: 8px; /* Jarak ke tabel */
-            border-bottom: 1px solid #f0f0f0; /* Garis batas bawah judul */
-            font-size: 14px; /* Ukuran font judul */
+            margin: 0;
+            padding: 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
             font-weight: 600;
             color: var(--primary);
         }
@@ -585,9 +605,9 @@
             overflow-y: auto;
             border: 1px solid #eee;
             border-radius: 8px;
-            margin: 0 10px; /* Margin horizontal untuk konsistensi dengan chart lain */
-            margin-top: 5px; /* Jarak kecil dari judul ke tabel */
-            height: calc(100% - 50px); /* Tinggi sisanya dikurangi tinggi judul dan padding */
+            margin: 0 10px;
+            margin-top: 5px;
+            height: calc(100% - 50px);
         }
 
         #project-remain-table {
@@ -783,7 +803,7 @@
             }
             /* Responsive: Project Details */
             .chart-container.project-details {
-                height: 450px; /* Atur tinggi responsif */
+                height: 450px;
             }
         }
         @media (max-width: 1200px) {
@@ -846,6 +866,14 @@
             }
             .main-content {
                 margin-left: 0;
+                width: 100%;
+            }
+            header {
+                left: 0;
+                padding-left: 60px;
+            }
+            .sidebar-toggle-btn {
+                left: 15px;
             }
         }
         @media (max-width: 992px) {
@@ -916,9 +944,14 @@
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
+                height: auto;
+                min-height: 80px;
             }
             .header-title {
-                font-size: 20px;
+                font-size: 18px;
+            }
+            .current-date {
+                font-size: 12px;
             }
             .truck-input-row {
                 flex-direction: column;
@@ -984,6 +1017,11 @@
             .chart-date-filter {
                 display: none;
             }
+            .sidebar-toggle-btn {
+                top: 10px;
+                left: 10px;
+                font-size: 16px;
+            }
         }
         @media (max-width: 576px) {
             .chart-container {
@@ -1033,6 +1071,18 @@
             /* Responsive: Project Details */
             .chart-container.project-details {
                 height: 250px;
+            }
+            header {
+                padding: 12px 15px 12px 45px;
+                min-height: 70px;
+            }
+            .header-title {
+                font-size: 16px;
+            }
+            .sidebar-toggle-btn {
+                top: 8px;
+                left: 8px;
+                font-size: 14px;
             }
         }
         @media (min-width: 1600px) {
@@ -1087,7 +1137,7 @@
     <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
         <i class="fas fa-bars"></i>
     </button>
-    <div class="sidebar hidden" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Menu</h3>
             <button class="sidebar-toggle" id="sidebarToggle">
@@ -1153,7 +1203,8 @@
             </div>
         </div>
     </div>
-    <div class="main-content expanded" id="mainContent">
+    <div class="main-content" id="mainContent">
+        <!-- HEADER STICKY FIXED -->
         <header>
             <div class="header-title">
                 <i class="fas fa-chart-line"></i>
@@ -2450,7 +2501,7 @@
                     borderRadius: 4,
                     barPercentage: 0.45,
                     categoryPercentage: 0.8,
-                    order: 2, // <-- SUDAH DIUBAH: Order sekarang 2 (di sebelah kiri)
+                    order: 2,
                     datalabels: {
                         display: function(context) {
                             const value = orderDataValues[context.dataIndex];
@@ -2488,7 +2539,7 @@
                     borderRadius: 4,
                     barPercentage: 0.45,
                     categoryPercentage: 0.8,
-                    order: 3, // <-- SUDAH DIUBAH: Delivery sekarang 3 (di sebelah kanan)
+                    order: 3,
                     datalabels: {
                         display: function(context) {
                             const value = deliveryDataValues[context.dataIndex];
@@ -2578,7 +2629,7 @@
                         legend: {
                             display: true,
                             position: 'top',
-                            align: 'center', // <-- Tambahkan baris ini
+                            align: 'center',
                             labels: {
                                 boxWidth: 12,
                                 padding: 15,
